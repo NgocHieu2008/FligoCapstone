@@ -1,0 +1,25 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+:root{
+    --green-primary-color: #75B40D;
+    --blue-primary-color: #2ABCFF;
+    --blue-secondary-color: #0E185F;
+    --blue-tertiary-color: #2FA4FF;
+    --white-color: #FFFFFF;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
