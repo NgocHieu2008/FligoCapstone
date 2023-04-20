@@ -1,8 +1,10 @@
+import {FooterStyled} from "./FooterStyled";
+
 function Footer() {
     return ( 
-        <footer className="footer">
-        <h1>Footer</h1>
-        </footer>
+        <FooterStyled >
+            <p>Footer</p>
+        </FooterStyled>
      );
 }
 
