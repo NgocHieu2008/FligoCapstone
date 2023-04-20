@@ -42,8 +42,8 @@ export const Link = styled.a`
 `;
 
 export const Icon = styled(languageIcon)`
-    height: 18px;
-    width: 18px;
+    height: 16px;
+    width: 16px;
     margin-right: 8px;
     & path {
         fill: ${({color}) => color};
