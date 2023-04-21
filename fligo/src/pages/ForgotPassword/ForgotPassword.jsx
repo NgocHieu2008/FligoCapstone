@@ -1,6 +1,10 @@
+import Header from "~/components/Layout/DefaultLayout/Header/Header";
+
 function ForgotPassword() {
     return ( 
-        <h1>Forgot password</h1>
+        <>
+            <div>Hello</div>
+        </>
      );
 }
 
