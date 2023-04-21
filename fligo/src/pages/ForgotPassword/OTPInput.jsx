@@ -28,11 +28,9 @@ function OTPInput() {
     console.log(contactType);
     if (contactType === "email") {
       url = "https://fligoserver.learnings.social/otp-reset/verify-otp-email";
-      // url = "http://localhost:8060/otp-reset/verify-otp-email";
       body = JSON.stringify({ email: contact, otp: OTPinput.join("") });
     } else {
       url = "https://fligoserver.learnings.social/otp-reset/verify-otp-sms";
-      // url = "https://localhost:8060/otp-reset/verify-otp-sms";
       body = JSON.stringify({ phoneNumber: contact, otp: OTPinput.join("") });
     }
 
@@ -51,12 +49,8 @@ function OTPInput() {
   const handleConfirmClick = async (event) => {
     event.preventDefault();
     const response = await verifyOTP();
-    console.log(response);
-    console.log(response.status);
-    if (response.status === "approved") {
+    if (response.status === 200) {
       setPage("reset");
-      // alert("Success");
-      return;
     }
     alert(
       "The code you have entered is not correct, try again or re-send the link"

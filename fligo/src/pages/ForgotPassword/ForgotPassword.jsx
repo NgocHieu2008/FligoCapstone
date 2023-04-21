@@ -22,12 +22,10 @@ function ForgotPassword() {
     if (contactType === "email") {
       // input is email
       url = "https://fligoserver.learnings.social/otp-reset/send-otp-email";
-      // url = "http://localhost:8060/otp-reset/send-otp-email";
       body = JSON.stringify({ email: contact });
     } else {
       // input is phone number
       url = "https://fligoserver.learnings.social/otp-reset/send-otp-sms";
-      // url = "http://localhost:8060/otp-reset/send-otp-sms";
       const phoneNumber = contact.trim().startsWith("0")
         ? contact.trim().substring(1)
         : contact.trim();
