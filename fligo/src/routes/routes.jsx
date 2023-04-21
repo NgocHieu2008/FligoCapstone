@@ -1,11 +1,11 @@
 import LandingPage from '~/pages/LandingPage/LandingPage';
 import SignUp from '~/pages/SignUp/SignUp';
-import ForgotPassword from '~/pages/ForgotPassword/ForgotPassword';
+import ResetPassword from '~/pages/ForgotPassword/ResetPassword';
 
 const publicRoutes = [
     {path: '/', component: LandingPage},
     {path: '/signup', component: SignUp},
-    {path: '/forgot-password', component: ForgotPassword},
+    {path: '/forgot-password', component: ResetPassword},
 ]
 
 const privateRoutes = [
