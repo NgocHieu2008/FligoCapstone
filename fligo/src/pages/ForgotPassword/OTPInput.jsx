@@ -41,7 +41,9 @@ function OTPInput() {
       },
       body,
     });
-    return response;
+    // return response;
+    const responseData = await response.json();
+    return responseData;
   }
 
   const handleConfirmClick = async (event) => {
@@ -49,7 +51,6 @@ function OTPInput() {
     const response = await verifyOTP();
     if (response.status === 200) {
       setPage("reset");
-      return;
     }
     alert(
       "The code you have entered is not correct, try again or re-send the link"
