@@ -9,8 +9,6 @@ import {
   Icon
 } from "./Header.styled.js";
 import logo from "../../../../assets/Asset3.png";
-import languageIcon from "../../../../assets/language-icon.svg"
-// import IconLanguage from "./LanguageIcon.jsx";
 
 function Header() {
   return (
