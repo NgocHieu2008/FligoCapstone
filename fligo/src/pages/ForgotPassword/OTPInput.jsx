@@ -51,8 +51,9 @@ function OTPInput() {
     const response = await verifyOTP();
     if (response.status === "approved") {
       setPage("reset");
-    }
-    alert(
+      return;
+    } else
+      alert(
       "The code you have entered is not correct, try again or re-send the link"
     );
     return;
