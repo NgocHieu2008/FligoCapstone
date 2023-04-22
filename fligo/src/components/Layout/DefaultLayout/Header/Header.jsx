@@ -68,7 +68,8 @@ function Header() {
 
     if(user && user.password === password) {
       localStorage.setItem("loggedInUser", JSON.stringify(user));
-      window.location.href = "/";
+      // routes to home page
+      window.location.href = "/home";
       alert("Login successful");
     }
 

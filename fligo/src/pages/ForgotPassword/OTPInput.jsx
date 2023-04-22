@@ -49,8 +49,12 @@ function OTPInput() {
     const response = await verifyOTP();
     if (response.status === 200) {
       setPage("reset");
+<<<<<<< Updated upstream
       return;
     }
+=======
+    } else
+>>>>>>> Stashed changes
     alert(
       "The code you have entered is not correct, try again or re-send the link"
     );
