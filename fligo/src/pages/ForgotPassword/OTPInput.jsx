@@ -27,10 +27,10 @@ function OTPInput() {
     let body;
     console.log(contactType);
     if (contactType === "email") {
-      url = "https://fligoserver.learnings.social/otp-reset/verify-otp-email";
+      url = "https://fligo-server.vercel.app/otp-reset/verify-otp-email";
       body = JSON.stringify({ email: contact, otp: OTPinput.join("") });
     } else {
-      url = "https://fligoserver.learnings.social/otp-reset/verify-otp-sms";
+      url = "https://fligo-server.vercel.app/otp-reset/verify-otp-sms";
       body = JSON.stringify({ phoneNumber: contact, otp: OTPinput.join("") });
     }
 
@@ -41,21 +41,19 @@ function OTPInput() {
       },
       body,
     });
-    return response;
+    // return response;
+    const responseData = await response.json();
+    return responseData;
   }
 
   const handleConfirmClick = async (event) => {
     event.preventDefault();
     const response = await verifyOTP();
-    if (response.status === 200) {
+    if (response.status === "approved") {
       setPage("reset");
-<<<<<<< Updated upstream
       return;
-    }
-=======
     } else
->>>>>>> Stashed changes
-    alert(
+      alert(
       "The code you have entered is not correct, try again or re-send the link"
     );
     return;
