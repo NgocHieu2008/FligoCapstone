@@ -2,11 +2,9 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import banner1 from '../../../assets/Banner 1.png';
-import banner2 from '../../../assets/Banner 2.png';
 import {ImageSlider, StyledSlider} from './BannerSlider.styled.js';
 
-function BannerSlider() {
+function BannerSlider({banner1, banner2, banner3}) {
   const settings = {
     dots: true,
     infinite: true,
@@ -14,7 +12,7 @@ function BannerSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     appendDots: dots => (
       <ul>{dots}</ul>
     ), 
@@ -28,6 +26,9 @@ function BannerSlider() {
         </ImageSlider>
         <ImageSlider>
           <img alt="banner 2" src={banner2} />
+        </ImageSlider>
+        <ImageSlider>
+          <img alt="banner 3" src={banner3} />
         </ImageSlider>
       </StyledSlider>
     </div>

@@ -3,7 +3,7 @@ import Slider from "react-slick";
 
 export const ImageSlider = styled.div`
     width: 100%;
-    height: 600px;
+    height: 500px;
 
     img {
         width: 100%;
