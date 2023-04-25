@@ -2,12 +2,14 @@ import BannerSlider from "~/components/Carousels/BannerSlider/BannerSlider";
 import { LandingPageContainer,FirstSessionContainer, SessionTitle, SecondSessionContainer, SubSession, Item, FlightPopularContainer } from "./LandingPage.styled";
 import { PopularFlight } from '~/data/PopularFlight';
 import PopularFlightCard from '~/components/Cards/PopularFlightCard/PopularFlightCard';
-
+import banner1 from "~/assets/Baner 1.jpg"
+import banner2 from "~/assets/Baner 2.gif"
+import banner3 from "~/assets/Baner 3.jpg"
 
 function LandingPage() {
     return ( 
         <LandingPageContainer>
-            <BannerSlider />
+            <BannerSlider banner1={banner1} banner2={banner2} banner3={banner3}/>
             <FirstSessionContainer>
                 <SessionTitle>Explore Popular Flight</SessionTitle>
                 <FlightPopularContainer>

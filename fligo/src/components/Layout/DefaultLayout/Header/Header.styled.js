@@ -21,7 +21,7 @@ export const NavbarDiv = styled.div`
 `
 
 export const Logo = styled.img`
-   width: 8%;
+   width: 6%;
    object-fit: cover;
 `
 
