@@ -5,11 +5,9 @@ function PrimaryLayout({children}) {
     return ( 
         <div>
             <HeaderHome />
-            <div className="container">
-                <div className="content">
+                <div className="content" style={{marginTop:"100px", overflowX:"hidden"}}>
                     {children}
                 </div>
-            </div>
             <Footer />
         </div>
      );
