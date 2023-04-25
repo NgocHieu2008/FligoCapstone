@@ -5,7 +5,7 @@ function DefaultLayout({children}) {
     return ( 
         <div>
             <Header  />
-            <div className="content" style={{marginTop:"100px"}}>
+            <div className="content" style={{marginTop:"100px", overflowX:"hidden"}}>
                 {children}
             </div>
             <Footer />
