@@ -55,6 +55,7 @@ function OTPInput() {
       alert(
         "The code you have entered is not correct, try again or re-send the link"
       );
+
     return;
   };
 
