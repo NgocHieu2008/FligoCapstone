@@ -3,7 +3,7 @@ import background from "../../assets/flight-booking.jpg";
 
 export const Wrapper = styled.section`
   background: url(${background});
-  object-fit: scale-down;
+  background-size: cover;
   width: 100%;
   height: 100vh;
   display: flex;
