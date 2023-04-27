@@ -12,7 +12,7 @@ import { useContext, useRef } from "react";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 
 function ForgotPassword() {
-  const { setPage, setContact, setContactType } = useContext(RecoveryContext);
+  const { setPage, setContact, setContactType, setUsername } = useContext(RecoveryContext);
   const contactRef = useRef(null);
 
   async function sendOTP(contact, contactType) {
@@ -46,14 +46,19 @@ function ForgotPassword() {
     event.preventDefault();
 
     const contact = contactRef.current.value;
-    console.log(contact);
+    // console.log(contact);
     const contactType = /^\d{10}$/.test(contact) ? "phone" : "email";
     const response = await sendOTP(contact, contactType);
 
     if (response.ok) {
+      const storedUsers = JSON.parse(localStorage.getItem("users"));
+      const user = storedUsers.find((users) => users[contactType] === contact);
+      if(user) {
+        setUsername(user.username)
+      }
       setPage("otp");
       setContact(contact);
-      setContactType(contactType)
+      setContactType(contactType);
     } else {
       const errorMessage = await response.text();
       alert(errorMessage);
