@@ -35,6 +35,8 @@ export const DivTitle = styled.div`
     color: #fff;
     border-radius: 20px 20px 0 0;
     padding: 10px;
+    font-size: 2rem;
+    font-weight: 700;
     `;
 
 export const DivForm = styled.div`
@@ -55,8 +57,12 @@ export const FormStyled = styled(Form)`
 
 export const LabelStyled = styled.label`
     font-size: 1.5rem;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 10px;
+    color: var(--blue-secondary-color);
+    span {
+        color: red;
+    }
 `;
 
 export const InputStyled = styled(Field)`
@@ -74,6 +80,7 @@ export const InputStyled = styled(Field)`
 
 export const FieldWrapper = styled.div`
     position: relative;
+    height: 90px;
 `;
 
 export const DateContainer = styled.div`
@@ -101,5 +108,20 @@ export const ButtonStyled = styled.button`
         border: 1px solid var(--green-primary-color);
     }
     
+`;
+export const PhoneContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+`;
+
+export const ErrorStyled = styled(ErrorMessage)`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: red;
+    font-size: 1.2rem;
 `;
 
