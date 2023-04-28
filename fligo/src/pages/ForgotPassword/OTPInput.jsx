@@ -25,7 +25,7 @@ function OTPInput() {
   async function verifyOTP() {
     let url;
     let body;
-    console.log(contactType);
+    // console.log(contactType);
     if (contactType === "email") {
       url = "https://fligo-server.vercel.app/otp-reset/verify-otp-email";
       body = JSON.stringify({ email: contact, otp: OTPinput.join("") });
@@ -72,7 +72,7 @@ function OTPInput() {
   //     return () => clearInterval(interval);
   //   }, [disable]);
 
-  function handleChange(e, index) {
+  const handleChange = (e, index) => {
     const value = e.target.value;
 
     if (isNaN(value) || value === " ") {
@@ -93,7 +93,11 @@ function OTPInput() {
       nextInput.focus();
       nextInput.select();
     }
-  }
+  };
+
+  const handleBackButton = () => {
+    setPage("forgot-password")
+  };
   return (
     <>
       <Wrapper>
@@ -150,7 +154,10 @@ function OTPInput() {
               </span>
             </div> */}
             <Link>Resend Code</Link>
-            <Button onClick={handleConfirmClick}>Reset Password</Button>
+            <div style={{ display: "flex", padding: "0 80px" }}>
+              <Button $secondary onClick={handleBackButton}>Back</Button>
+              <Button onClick={handleConfirmClick}>Reset Password</Button>
+            </div>
           </form>
         </DivStyled>
       </Wrapper>

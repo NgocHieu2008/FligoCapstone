@@ -9,22 +9,23 @@ import Recovered from "./Recovered";
 export const RecoveryContext = createContext();
 function ResetPassword() {
   const [page, setPage] = useState("forgot-password");
-  const [email, setEmail] = useState();
-  const [otp, setOTP] = useState();
+  // const [email, setEmail] = useState();
+  // const [otp, setOTP] = useState();
   const [contact, setContact] = useState();
   const [contactType, setContactType] = useState();
+  const [username, setUsername] = useState();
 
   function NavigateComponents() {
     if (page === "forgot-password") return <ForgotPassword />;
     if (page === "otp") return <OTPInput />;
     if (page === "reset") return <Reset />;
-
+    
     return <Recovered />;
   }
   
   return (
     <RecoveryContext.Provider
-      value={{ page, setPage, otp, setOTP, setEmail, email, contact, setContact, contactType, setContactType }}
+      value={{ page, setPage, contact, setContact, contactType, setContactType, username, setUsername }}
     >
       <div>
         <NavigateComponents />
