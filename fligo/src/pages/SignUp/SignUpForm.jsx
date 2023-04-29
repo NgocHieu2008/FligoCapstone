@@ -4,8 +4,7 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Wrapper, DivStyled, DivTitle, DivForm, FormStyled, LabelStyled, InputStyled, FieldWrapper, ErrorStyled, DateContainer, ButtonStyled, PhoneContainer } from './SignUp.styled';
-import { RecoveryContext } from './SignUp';
-import { useContext, useRef } from "react";
+import { useState } from "react";
 
 const SignupSchema = Yup.object().shape({
     userName: Yup.string().required('Required').min(6, 'Username must contain at least 6 characters').matches(/^[a-zA-Z0-9]+$/, 'Username must contain only letters and numbers'),
@@ -14,43 +13,21 @@ const SignupSchema = Yup.object().shape({
     dayOfBirth: Yup.number().required('Required').positive().integer(),
     monthOfBirth: Yup.number().required('Required').max(12),
     yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'You must be at least 18 years old'),
-    countryCode: Yup.string().required('Required'),
+    countryCode: Yup.string(),
     phoneNumber: Yup.string().required('Required').matches(/^[0-9]+$/, 'Phone number must contain only numbers'),
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string()
         .required('Required')
-        .min(8, 'Password must contain at least 8 characters'),
+        .min(8, 'Password must contain at least 8 characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character'),
     confirmPassword: Yup.string()
         .required('Required')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
-const FormSignUp = () => {
-    const { setPage, setContact, setContactType, setUsername } = useContext(RecoveryContext);
-    const contactRef = useRef(null);
+function SignUp({onSubmit}) {
 
-
-  const handleSubmit = (values) => {
-    const { userName, firstName, lastName, dayOfBirth, monthOfBirth, yearOfBirth, passportNumber, email, password } = values;
-    const DOB = moment(`${yearOfBirth}-${monthOfBirth}-${dayOfBirth}`).format('YYYY-MM-DD');
-    fetch('http://localhost:8000/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userName, firstName, lastName, DOB, passportNumber, email, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 'Ok') {
-            setPage("otp");
-        } else {
-          alert('Register failed');
-        }
-      });
-  };
   return (
-    <Wrapper>
+    <>
         <DivTitle>Create your new account</DivTitle>
         <DivStyled>
         <Formik
@@ -68,9 +45,9 @@ const FormSignUp = () => {
           confirmPassword: '',
         }}
         validationSchema={SignupSchema}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
-        {({ errors, touched, values, setFieldValue }) => (
+        {({ setFieldValue }) => (
           <Form>
             <FieldWrapper>
               <LabelStyled htmlFor="userName">User Name <span>*</span></LabelStyled>
@@ -121,7 +98,10 @@ const FormSignUp = () => {
                 <InputStyled
                   name="countryCode"
                   as = "select"
-                  onChange={(e) => setFieldValue('countryCode', e.target.value)}
+                  onChange={(e) => {
+                    setFieldValue("countryCode", e.target.value);
+                    }
+                  }
                   >
                   <option value="+84">+84</option>
                   <option value="+39">+39</option>
@@ -163,8 +143,8 @@ const FormSignUp = () => {
         )}
       </Formik>
         </DivStyled>
-    </Wrapper>
+</>
   );
 };
 
-export default FormSignUp;
+export default SignUp;
