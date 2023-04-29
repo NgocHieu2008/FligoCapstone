@@ -1,3 +1,4 @@
+
 import { Wrapper } from "./SignUp.styled";
 import { useState } from 'react';
 import SignUpForm from "~/pages/SignUp/SignUpForm";
