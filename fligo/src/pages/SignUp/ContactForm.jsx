@@ -56,6 +56,7 @@ function ContactForm({onSubmit}) {
                 <Button onClick={handlePhoneSubmit}>Phone Number</Button>
             </div>
         </Wrapper>
+
      );
 }
 

@@ -1,3 +1,4 @@
+
 import { Wrapper, DivStyled, Title, Subtitle, Button, Image } from '~/pages/ForgotPassword/ResetPassword.styled'
 import congratsImage from "../../assets/congrats.png"
 
