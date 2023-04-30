@@ -49,29 +49,27 @@ function Header() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    //get users from local storage
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    //call API to login
+    const data = {
+      username,
+      password,
+    };
 
-    const user = users.find( (user) => user.userName === username);
-
-    if (!user) {
-      setErrorMessage("User does not exist");
-      return;
-    }
-
-    if (user.password !== password) {
-      setErrorMessage("Password is incorrect");
-      return;
-    } else {
-      setErrorMessage(null);
-    }
-
-    if(user && user.password === password) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      // routes to home page
-      window.location.href = "/home";
-      alert("Login successful");
-    }
+    fetch("https://fligo-server.vercel.app/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Something went wrong");
+        } else {
+          window.location.href = "/home"
+        }
+        return response.json();
+      })
 
     // Reset form
     setUsername("");
@@ -158,12 +156,12 @@ function Header() {
                   </div>
                   {/* forgot password */}
                   <div>
-                    <Link to="/forgot-password" onClick={handleForgotPwClick}>Forgot password?</Link>
+                    <Link style={{textDecoration:"none", color:"var(--blue-primary-color)", fontSize:"1.2rem", fontWeight:"600"}} to="/forgot-password" onClick={handleForgotPwClick}>Forgot password?</Link>
                   </div>
                   {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
                   <LoginButtonForm type="submit">Login</LoginButtonForm>
                 </LoginForm>
-                <div><span>Already have an account?</span> <Link to="/signup" onClick={handleRegisterClick}>Register</Link></div>
+                <div style={{marginLeft:"80px",fontSize:"1.2rem", fontWeight:"600"}}><span>Already have an account?</span> <Link style={{textDecoration:"none", color:"var(--blue-primary-color)"}} to="/signup" onClick={handleRegisterClick}>Register</Link></div>
                 <Br/>
                 
               </FormWrapper>

@@ -37,7 +37,7 @@ export const SecondSessionContainer = styled.div`
 export const SubSession = styled.div`
     width: 80%;
     height: 100%;
-    align-items: center;
+    ${'' /* align-items: center; */}
     justify-content: space-around;
     display: flex;
     flex-direction: row;
