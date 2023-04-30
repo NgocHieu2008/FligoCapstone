@@ -106,12 +106,22 @@ function SignUp() {
     }
 
   }
+
+  const handleBack = () => {
+    setStep(step - 1);
+  }
+
+  const handleLogin = () => {
+    // return to login page
+    window.location.href = "/";
+  }
+
   return ( 
       <Wrapper>
         {step === 1 && <SignUpForm onSubmit={handleSignup}/>}
-        {step === 2 && <ContactForm email={email} phoneNo={phone} onSubmit={handleContact}/>}
-        {step === 3 && <OtpForm onSubmit={handleOtp}/>}
-        {step === 4 && <Success value={value}/>}
+        {step === 2 && <ContactForm onSubmit={handleContact}/>}
+        {step === 3 && <OtpForm onSubmit={handleOtp} onBack={handleBack}/>}
+        {step === 4 && <Success onSubmit={handleLogin} value={value}/>}
       </Wrapper>
    );
 }
