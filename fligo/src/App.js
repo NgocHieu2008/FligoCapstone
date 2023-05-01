@@ -7,13 +7,15 @@ function App() {
 
   // check if user is logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // check token in local storage
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
+    if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [token]);
+  
   return (
     <Router>
       <div className="App">

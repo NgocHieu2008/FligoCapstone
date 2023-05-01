@@ -49,32 +49,33 @@ function Header() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    //call API to login
-    const data = {
-      username,
-      password,
-    };
-
-    fetch("https://fligo-server.vercel.app/login", {
+    // call api to login
+    fetch("http://localhost:8000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      body: JSON.stringify({ username, password }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Something went wrong");
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status === "Ok") {
+          // save token to local storage
+          localStorage.setItem("token", data.data);
+          // hide login form
+          setShowLoginForm(false);
+          // reset form
+          setUsername("");
+          setPassword("");
+          // set error message to null
+          setErrorMessage(null);
+          // redirect to home page
+          window.location.href = "/home";
         } else {
-          window.location.href = "/home"
+          setErrorMessage(data.error);
         }
-        return response.json();
       })
-
-    // Reset form
-    setUsername("");
-    setPassword("");
-    setShowLoginForm(false);
   };
 
   const handleRegisterClick = () => {
