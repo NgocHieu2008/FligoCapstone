@@ -13,14 +13,29 @@ import {
 import {UserContainer, CustomerIcon} from "~/components/Layout/PrimaryLayout/Header/HeaderHome.styled.jsx";
 import logo from "../../../../assets/Asset3.png";
 
-import {useRef, useState } from "react";
+import {useRef, useState, useEffect } from "react";
 function HeaderHome() {
     const ref = useRef();
 
     //check if user is logged in
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    const [loggedInUser, setLoggedInUser] = useState(user);
-
+    const [loggedInUser, setLoggedInUser] = useState(null);
+    // check token in local storage
+    const token = localStorage.getItem("token");
+    useEffect(() => {
+      fetch("http://localhost:8000/userData",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "Ok") {
+            setLoggedInUser(data);
+          }
+        });
+    }, [token]);
     return ( 
         <>
         <Wrapper ref={ref} className="wrapper">
@@ -57,7 +72,7 @@ function HeaderHome() {
             {loggedInUser ? (
                 <UserContainer>
                     <CustomerIcon/>
-                    <span>{loggedInUser.firstName}</span>
+                    <span>{loggedInUser.data.firstname}</span>
                 </UserContainer>
             ) : (
                 <>

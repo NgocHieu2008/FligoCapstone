@@ -12,7 +12,7 @@ function Success({onSubmit, value}) {
         <DivStyled>
           <Title style={{marginBottom:"15px"}}>Congratulations!</Title>
           <Image src={congratsImage} alt="" />
-          <Subtitle $center style={{marginTop:"10px"}}>Hi, {value.lastName} !</Subtitle>
+          <Subtitle $center style={{marginTop:"10px"}}>Hi, {value.firstname} !</Subtitle>
           <Subtitle $center style={{marginTop:"10px"}}>Congratulations, you have successfully registered!</Subtitle>
           <Button onClick={handleSubmit} style={{marginTop:"15px"}}>Ready to login</Button>
         </DivStyled>

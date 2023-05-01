@@ -14,6 +14,14 @@ function SignUp() {
   const [value, setValue] = useState();
 
   const handleSignup =  async (value) => {
+    const { dateOfBirth, monthOfBirth, yearOfBirth, countryCode, phoneNumber } = value;
+    value.dayOfBirth = `${dateOfBirth}/${monthOfBirth}/${yearOfBirth}`;
+    value.phoneNo = `${countryCode}${phoneNumber}`;
+    delete value.dateOfBirth;
+    delete value.monthOfBirth;
+    delete value.yearOfBirth;
+    delete value.countryCode;
+    delete value.phoneNumber;
     setValue(value);
     // call API check email
     const response = await fetch("http://localhost:8000/check-email", {

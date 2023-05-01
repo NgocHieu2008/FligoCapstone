@@ -7,10 +7,10 @@ import { Wrapper, DivStyled, DivTitle, DivForm, FormStyled, LabelStyled, InputSt
 import { useState } from "react";
 
 const SignupSchema = Yup.object().shape({
-    userName: Yup.string().required('Required').min(6, 'Username must contain at least 6 characters').matches(/^[a-zA-Z0-9]+$/, 'Username must contain only letters and numbers'),
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required'),
-    dayOfBirth: Yup.number().required('Required').positive().integer(),
+    username: Yup.string().required('Required').min(6, 'Username must contain at least 6 characters').matches(/^[a-zA-Z0-9]+$/, 'Username must contain only letters and numbers'),
+    firstname: Yup.string().required('Required'),
+    lastname: Yup.string().required('Required'),
+    dateOfBirth: Yup.number().required('Required').positive().integer(),
     monthOfBirth: Yup.number().required('Required').max(12),
     yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'You must be at least 18 years old'),
     countryCode: Yup.string(),
@@ -32,9 +32,9 @@ function SignUp({onSubmit}) {
         <DivStyled>
         <Formik
         initialValues={{
-          userName: '',
-          firstName: '',
-          lastName: '',
+          username: '',
+          firstname: '',
+          lastname: '',
           dayOfBirth: '',
           monthOfBirth: '',
           yearOfBirth: '',
@@ -50,20 +50,20 @@ function SignUp({onSubmit}) {
         {({ setFieldValue }) => (
           <Form>
             <FieldWrapper>
-              <LabelStyled htmlFor="userName">User Name <span>*</span></LabelStyled>
-              <InputStyled name="userName" />
-              <ErrorStyled component="div" name="userName" />
+              <LabelStyled htmlFor="username">User Name <span>*</span></LabelStyled>
+              <InputStyled name="username" />
+              <ErrorStyled component="div" name="username" />
             </FieldWrapper>
             <FieldWrapper>
-              <LabelStyled htmlFor="firstName">First Name <span>*</span></LabelStyled>
-              <InputStyled name="firstName" />
-              <ErrorStyled component="div" name="firstName" />
+              <LabelStyled htmlFor="firstname">First Name <span>*</span></LabelStyled>
+              <InputStyled name="firstname" />
+              <ErrorStyled component="div" name="firstname" />
             </FieldWrapper>
 
             <FieldWrapper>
-              <LabelStyled htmlFor="lastName">Last Name <span>*</span></LabelStyled>
-              <InputStyled name="lastName" />
-              <ErrorStyled component="div" name="lastName" />
+              <LabelStyled htmlFor="lastname">Last Name <span>*</span></LabelStyled>
+              <InputStyled name="lastname" />
+              <ErrorStyled component="div" name="lastname" />
             </FieldWrapper>
 
             <DateContainer>
