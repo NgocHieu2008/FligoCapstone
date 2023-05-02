@@ -21,7 +21,6 @@ import discount3 from "~/assets/discount3.jpg"
 import bitexco from "~/assets/bitexco-1.jpg"
 import cauvang from "~/assets/cauvang.jpg"
 import halong from "~/assets/ha-long.jpg"
-import hoian from "~/assets/hoian.jpg"
 import helpline from "~/assets/helpline 1.png"
 import piggybank from "~/assets/piggy-bank 1.png"
 
