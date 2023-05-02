@@ -13,7 +13,7 @@ export const Wrapper = styled.header`
   width: 100%;
   background-color: #fff;
   z-index: 9999; /* Đảm bảo header luôn nằm trên top nhất */
-  padding: 5px 10px;
+  padding: 5px 20px;
 `;
 
 export const NavbarDiv = styled.div`
