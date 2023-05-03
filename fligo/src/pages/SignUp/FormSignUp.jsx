@@ -1,77 +1,100 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage, FormikConsumer } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Wrapper, DivStyled, DivTitle, DivForm, FormStyled, LabelStyled, InputStyled, FieldWrapper, ErrorStyled, DateContainer, ButtonStyled, PhoneContainer } from './SignUp.styled';
-import { useState } from "react";
+import { RecoveryContext } from './SignUp';
+import { useContext, useRef } from "react";
 
 const SignupSchema = Yup.object().shape({
-    username: Yup.string().required('Required').min(6, 'Username must contain at least 6 characters').matches(/^[a-zA-Z0-9]+$/, 'Username must contain only letters and numbers'),
-    firstname: Yup.string().required('Required'),
-    lastname: Yup.string().required('Required'),
-    dateOfBirth: Yup.number().required('Required').positive().integer(),
+    userName: Yup.string().required('Required').min(6, 'Username must contain at least 6 characters').matches(/^[a-zA-Z0-9]+$/, 'Username must contain only letters and numbers'),
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
+    dayOfBirth: Yup.number().required('Required').positive().integer(),
     monthOfBirth: Yup.number().required('Required').max(12),
     yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'You must be at least 18 years old'),
-    countryCode: Yup.string(),
-    phoneNo: Yup.string().required('Required').matches(/^[0-9]+$/, 'Phone number must contain only numbers'),
+    countryCode: Yup.string().required('Required'),
+    phoneNumber: Yup.string().required('Required').matches(/^[0-9]+$/, 'Phone number must contain only numbers'),
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string()
         .required('Required')
-        .min(8, 'Password must contain at least 8 characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character'),
+        .min(8, 'Password must contain at least 8 characters'),
     confirmPassword: Yup.string()
         .required('Required')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
-const SignUpForm = ({Submit}) => {
+const FormSignUp = () => {
+    const { setPage, setContact, setContactType, setUsername } = useContext(RecoveryContext);
+    const contactRef = useRef(null);
+
+
+  const handleSubmit = (values) => {
+    const { userName, firstName, lastName, dayOfBirth, monthOfBirth, yearOfBirth, passportNumber, email, password } = values;
+    const DOB = moment(`${yearOfBirth}-${monthOfBirth}-${dayOfBirth}`).format('YYYY-MM-DD');
+    fetch('http://localhost:8000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userName, firstName, lastName, DOB, passportNumber, email, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 'Ok') {
+            setPage("otp");
+        } else {
+          alert('Register failed');
+        }
+      });
+  };
   return (
-    <>
+    <Wrapper>
         <DivTitle>Create your new account</DivTitle>
         <DivStyled>
         <Formik
         initialValues={{
-          username: '',
-          firstname: '',
-          lastname: '',
-          dateOfBirth: '',
+          userName: '',
+          firstName: '',
+          lastName: '',
+          dayOfBirth: '',
           monthOfBirth: '',
           yearOfBirth: '',
           countryCode: '',
-          phoneNo: '',
+          phoneNumber: '',
           email: '',
           password: '',
           confirmPassword: '',
         }}
         validationSchema={SignupSchema}
-        onSubmit={Submit}
+        onSubmit={handleSubmit}
       >
-        {({ values, handleSubmit, handleCountryCode, formikProps }) => (
-          
+        {({ errors, touched, values, setFieldValue }) => (
           <Form>
             <FieldWrapper>
-              <LabelStyled htmlFor="username">User Name <span>*</span></LabelStyled>
-              <InputStyled name="username" />
-              <ErrorStyled component="div" name="username" />
+              <LabelStyled htmlFor="userName">User Name <span>*</span></LabelStyled>
+              <InputStyled name="userName" />
+              <ErrorStyled component="div" name="userName" />
             </FieldWrapper>
             <FieldWrapper>
-              <LabelStyled htmlFor="firstname">First Name <span>*</span></LabelStyled>
-              <InputStyled name="firstname" />
-              <ErrorStyled component="div" name="firstname" />
+              <LabelStyled htmlFor="firstName">First Name <span>*</span></LabelStyled>
+              <InputStyled name="firstName" />
+              <ErrorStyled component="div" name="firstName" />
             </FieldWrapper>
 
             <FieldWrapper>
-              <LabelStyled htmlFor="lastname">Last Name <span>*</span></LabelStyled>
-              <InputStyled name="lastname" />
-              <ErrorStyled component="div" name="lastname" />
+              <LabelStyled htmlFor="lastName">Last Name <span>*</span></LabelStyled>
+              <InputStyled name="lastName" />
+              <ErrorStyled component="div" name="lastName" />
             </FieldWrapper>
 
             <DateContainer>
                 <FieldWrapper style={{width:"30%"}}>
-                  <LabelStyled htmlFor="dateOfBirth">Day of Birth <span>*</span></LabelStyled>
-                    <InputStyled name="dateOfBirth" type="number" placeholder="Day" min="1" max="31" >
+                  <LabelStyled htmlFor="dayOfBirth">Day of Birth <span>*</span></LabelStyled>
+                    <InputStyled name="dayOfBirth" type="number" placeholder="Day" min="1" max="31" >
                     </InputStyled>
-                    <ErrorStyled component="div" name="dateOfBirth" />
+                    <ErrorStyled component="div" name="dayOfBirth" />
                 </FieldWrapper>
                 <FieldWrapper style={{width:"30%"}}>
                   <LabelStyled htmlFor="monthOfBirth">Month of Birth <span>*</span></LabelStyled>
@@ -98,7 +121,7 @@ const SignUpForm = ({Submit}) => {
                 <InputStyled
                   name="countryCode"
                   as = "select"
-                  onChange={handleCountryCode}
+                  onChange={(e) => setFieldValue('countryCode', e.target.value)}
                   >
                   <option value="+84">+84</option>
                   <option value="+39">+39</option>
@@ -109,9 +132,9 @@ const SignUpForm = ({Submit}) => {
                   <ErrorStyled component="div" name="countryCode" />
               </FieldWrapper>
               <FieldWrapper style={{width:"70%"}}>
-                <LabelStyled htmlFor="phoneNo">Phone Number <span>*</span></LabelStyled>
-                <InputStyled name="phoneNo" />
-                <ErrorStyled component="div" name="phoneNo" />
+                <LabelStyled htmlFor="phoneNumber">Phone Number <span>*</span></LabelStyled>
+                <InputStyled name="phoneNumber" />
+                <ErrorStyled component="div" name="phoneNumber" />
               </FieldWrapper>
             </PhoneContainer>
             <FieldWrapper>
@@ -135,13 +158,13 @@ const SignUpForm = ({Submit}) => {
               <span style={{color:"#ADA599"}}>Already have an account?  </span>
               <Link style={{color:"var(--blue-primary-color)",textDecoration:"none"}} to="/">Login</Link>
             </div>
-            <ButtonStyled type="submit">SIGN UP</ButtonStyled>
+            <ButtonStyled type="submit">Sign Up</ButtonStyled>
           </Form>
         )}
       </Formik>
         </DivStyled>
-</>
+    </Wrapper>
   );
 };
 
-export default SignUpForm;
+export default FormSignUp;
