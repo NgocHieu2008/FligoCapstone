@@ -14,14 +14,12 @@ function SignUp() {
   const [value, setValue] = useState();
 
   const handleSignup =  async (value) => {
-    const { dateOfBirth, monthOfBirth, yearOfBirth, countryCode, phoneNumber } = value;
-    value.dayOfBirth = `${dateOfBirth}/${monthOfBirth}/${yearOfBirth}`;
-    value.phoneNo = `${countryCode}${phoneNumber}`;
-    delete value.dateOfBirth;
-    delete value.monthOfBirth;
-    delete value.yearOfBirth;
-    delete value.countryCode;
-    delete value.phoneNumber;
+
+    // setValue(value);
+    // console.log(value);
+    // const phoneNo = value.countryCode + value.phoneNumber;
+    // value.phoneNo = phoneNo;
+    // value.dayOfBirth = value.dateOfBirth + "/" + value.monthOfBirth + "/" + value.yearOfBirth;
     setValue(value);
     // call API check email
     const response = await fetch("http://localhost:8000/check-email", {
@@ -34,8 +32,9 @@ function SignUp() {
     const data = await response.json();
     if(data.status === "success") {
       setEmail(value.email);
-      setPhone(value.phoneNumber);
+      setPhone(value.phoneNo);
       setStep(2);
+      console.log(value);
     } else {
       alert("Email already exists");
     }
@@ -54,8 +53,10 @@ function SignUp() {
     if (contactType === "phone") {
       setContactType("phone");
       url = "https://fligo-server.vercel.app/otp-reset/send-otp-sms";
-      body = JSON.stringify({ phoneNumber: phone });
+      body = JSON.stringify({ phoneNo: phone });
     }
+
+    console.log(body)
 
     const response = await fetch(url, {
       method: "POST",
@@ -126,7 +127,7 @@ function SignUp() {
 
   return ( 
       <Wrapper>
-        {step === 1 && <SignUpForm onSubmit={handleSignup}/>}
+        {step === 1 && <SignUpForm Submit={handleSignup}/>}
         {step === 2 && <ContactForm onSubmit={handleContact}/>}
         {step === 3 && <OtpForm onSubmit={handleOtp} onBack={handleBack}/>}
         {step === 4 && <Success onSubmit={handleLogin} value={value}/>}
