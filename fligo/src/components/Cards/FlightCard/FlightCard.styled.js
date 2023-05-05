@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     border-radius: 10px;
     width: 95%;
+    margin-bottom: 20px;
 `;
 
 export const DetailWrapper = styled.div`

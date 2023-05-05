@@ -14,7 +14,7 @@ function SearchBar() {
 
     const Location = [
         "Ho Chi Minh City",
-        "Hanoi",
+        "Ha Noi",
         "Da Nang",
         "Da Lat"
     ]
