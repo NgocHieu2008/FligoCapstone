@@ -67,6 +67,7 @@ function HeaderHome() {
       };
     }, []);
 
+
     // click on logout
     const handleLogout = () => {
       localStorage.removeItem("token");
