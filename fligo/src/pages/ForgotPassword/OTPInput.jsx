@@ -25,8 +25,8 @@ function OTPInput() {
   async function verifyOTP() {
     let url;
     let body;
-    console.log(contactType);
-    console.log(contact);
+    // console.log(contactType);
+    // console.log(contact);
     if (contactType === "email") {
       url = "https://fligo.vercel.app/otp/verify-otp-email";
       body = JSON.stringify({ email: contact, otp: OTPinput.join("") });
@@ -55,8 +55,8 @@ function OTPInput() {
       return;
     } else
       alert(
-      "The code you have entered is not correct, try again or re-send the link"
-    );
+        "The code you have entered is not correct, try again or re-send the link"
+      );
     return;
   };
 

@@ -51,6 +51,11 @@ function ForgotPassword() {
     const response = await sendOTP(contact, contactType);
 
     if (response.ok) {
+      const storedUsers = JSON.parse(localStorage.getItem("users"));
+      const user = storedUsers.find((users) => users[contactType] === contact);
+      if(user) {
+        setUsername(user.username)
+      }
       setPage("otp");
       setContact(contact);
       setContactType(contactType);
