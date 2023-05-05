@@ -9,6 +9,8 @@ import Payment from '~/pages/Payment/Payment';
 import SuccessPayment from '~/pages/SuccessPayment/SuccessPayment';
 import SuccessBooking from '~/pages/SuccessBooking/SuccessBooking';
 import History from '~/pages/History/History';
+import { SecondaryLayout } from '~/components/Layout/layout';
+import BookSeat from '~/pages/BookSeat/BookSeat';
 
 const publicRoutes = [
     {path: '/', component: LandingPage},
@@ -17,14 +19,15 @@ const publicRoutes = [
 ]
 
 const privateRoutes = [
-    {path:'/home', component:Home},
-    {path:'/order', component: Order},
+    {path:'/home', component:Home, layout: SecondaryLayout},
+    {path:'/order', component: Order, layout: SecondaryLayout},
     {path:'/info-booking', component:InfoBooking},
     {path:'/confirm-info', component: ConfirmInfo},
     {path:'/payment', component: Payment},
     {path:'/success-payment', component: SuccessPayment},
     {path:'/success-booking', component: SuccessBooking},
-    {path:'/history', component: History}
+    {path:'/history', component: History},
+    {path:'/book-seat', component: BookSeat}
 ]
 
 export { publicRoutes, privateRoutes }

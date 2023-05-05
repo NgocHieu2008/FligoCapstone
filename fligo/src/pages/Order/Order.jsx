@@ -1,16 +1,14 @@
 import SearchBar from "~/components/SearchBar/SearchBar";
 import {SearchWrapper, TimeLineWrapper, ContentWrapper, FilterWrapper, FlightWrapper, Filter,FilterTitle, Form, Label} from "./Order.styled";
 import FlightCard from "~/components/Cards/FlightCard/FlightCard";
-
 import sort from "~/assets/sort.png";
+
+import React from 'react';
 
 function Order() {
 
     return ( 
         <>
-            <SearchWrapper>
-                <SearchBar></SearchBar>
-            </SearchWrapper>
             <TimeLineWrapper>Timeline</TimeLineWrapper>
             <ContentWrapper>
                 <FilterWrapper>

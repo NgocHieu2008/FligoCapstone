@@ -10,6 +10,12 @@ import React, { useState } from 'react';
 function FlightCard() {
 
     const [showDetail, setShowDetail] = useState(false);
+
+    const handleChoose = () => {
+        console.log("choose");
+        // Chuyển qua trang book seat 
+        window.location.href = "/book-seat";
+    }
     
     const handleShowDetail = () => {
         setShowDetail(!showDetail);
@@ -36,7 +42,7 @@ function FlightCard() {
                     </SubWrapper>
                     <SubWrapper>
                         <Price>US $150.00</Price>
-                        <Button>Choose</Button>
+                        <Button onClick={handleChoose}>Choose</Button>
                     </SubWrapper>
                 </DetailWrapper>
                 <DetailButton onClick={handleShowDetail}>
