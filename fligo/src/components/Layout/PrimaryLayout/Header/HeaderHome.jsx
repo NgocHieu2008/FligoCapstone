@@ -66,6 +66,25 @@ function HeaderHome() {
         document.removeEventListener("keydown", handleEsc);
       };
     }, []);
+
+    // click on logout
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      setLoggedInUser(null);
+      fetch("http://localhost:8000/logout", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          window.location.href = "/";
+        }
+        );
+
+    };
     
     return ( 
         <>
@@ -105,7 +124,7 @@ function HeaderHome() {
                       <MenuList>
                           <li>Profile Infomation</li>
                           <li>Settings</li>
-                          <li>Logout</li>
+                          <li onClick={handleLogout}>Logout</li>
                       </MenuList>
                   ) : (
                       <></>

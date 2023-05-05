@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { ChatIcon, ChatWrapper, ChatBotContainer,SearchWrapper,SectionTitle,BoxWrapper,DiscountWrapper,TopWrapper,Wrapper,FormWrapper,FormContainer,EmailInput,Button } from './Home.styled';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import Chatbot from 'react-chatbot-kit';
@@ -45,9 +45,6 @@ function Home() {
                 </ChatBotContainer> : null }
             </ChatWrapper>
 
-            <SearchWrapper>
-                <SearchBar></SearchBar>
-            </SearchWrapper>
             <BannerSlider banner1={banner1} banner2={banner2} banner3={banner3}/>
             <div style={{marginBottom:"50px"}}>
                 <SectionTitle>Additional Service</SectionTitle>
