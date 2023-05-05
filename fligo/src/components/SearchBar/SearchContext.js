@@ -1,15 +1,13 @@
-import React, { createContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+
+import React, { createContext, useState, useEffect } from 'react';
 
 const SearchContext = createContext();
 
 function SearchProvider({ children }) {
 
-    const history = useHistory();
-
     const Location = [
         "Ho Chi Minh City",
-        "Hanoi",
+        "Ha Noi",
         "Da Nang",
         "Da Lat"
     ]
@@ -21,18 +19,36 @@ function SearchProvider({ children }) {
 
     const [searchResult, setSearchResult] = useState([]);
 
-  const onSearch = async (event) => {
-    if (event) {
-        event.preventDefault();
+    useEffect(() => {
+      const searchBarContent = JSON.parse(localStorage.getItem("searchBarContent"));
+      if (searchBarContent) {
+          setFromLocation(searchBarContent.fromLocation);
+          setToLocation(searchBarContent.toLocation);
+          setDepartureDate(searchBarContent.departureDate);
+          setSearchResult(searchBarContent.flights);
       }
-    // nếu đang ở trang home thì chuyển qua trang order (để hiển thị kết quả tìm kiếm)
-    if(window.location.pathname === "/home"){
-        window.location.href = "/order";
-    }
-    // Tìm kiếm chuyến bay dựa trên điểm khởi hành, điểm đến và ngày đi
-    const result = "Kết quả tìm kiếm"
-    // Lưu kết quả tìm kiếm vào state searchResult
-    setSearchResult(result);
+  }, []);
+  
+
+  const onSearch = async (event) => {
+    const result = await fetch(`http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}`)
+      .then((res) => res.json())
+
+      console.log(result.data);
+    const flights = result.data;
+      // Lưu kết quả tìm kiếm vào state searchResult
+      setSearchResult(flights);
+      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
+  // nếu đang ở trang home thì chuyển qua trang order (để hiển thị kết quả tìm kiếm)
+      if(window.location.pathname === "/home"){
+      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
+      window.location.href = "/order";
+  }
+
+  if (window.location.pathname === "/order") {
+      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
+  }
+
   };
 
   const value = {fromLocation,setFromLocation, toLocation, setToLocation, departureDate, setDepartureDate, searchResult, setSearchResult, onSearch};
