@@ -1,8 +1,9 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { publicRoutes, privateRoutes } from '~/routes/routes';
 import DefaultLayout from '~/components/Layout/DefaultLayout/defaultlayout';
 import PrimaryLayout from '~/components/Layout/PrimaryLayout/primarylayout';
 import { useState, useEffect } from 'react';
+import {SearchProvider} from '~/components/SearchBar/SearchContext'
 function App() {
 
   // check if user is logged in
@@ -17,36 +18,55 @@ function App() {
   }, [token]);
   
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          {publicRoutes.map((route, index) => {
-            const Layout = route.layout || DefaultLayout;
-            const Page = route.component;
-            return <Route 
-              key={index} 
-              path={route.path} 
-              element={
+    <SearchProvider>
+    <BrowserRouter>
+      <Switch>
+        {publicRoutes.map((route, index) => {
+          const Layout = route.layout || DefaultLayout;
+          const Page = route.component;
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              exact={true}
+              render={(props) => (
                 <Layout>
-                  <Page />
+                  <Page {...props} />
                 </Layout>
-              } />
-          })}
-          {isLoggedIn && privateRoutes.map((route, index) => {
+              )}
+            />
+          );
+        }
+        )}
+        {isLoggedIn &&
+          privateRoutes.map((route, index) => {
             const Layout = route.layout || PrimaryLayout;
             const Page = route.component;
-            return <Route 
-              key={index} 
-              path={route.path} 
-              element={
-                <Layout>
-                  <Page />
-                </Layout>
-              } />
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                exact={true}
+                render={(props) => (
+                  <Layout>
+                    <Page {...props} />
+                  </Layout>
+                )}
+              />
+            );
           })}
-        </Routes>
-      </div>
-    </Router>
+        {!isLoggedIn &&
+          privateRoutes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={true}
+              component={route.component}
+            />
+          ))}
+      </Switch>
+    </BrowserRouter>
+  </SearchProvider>
   );
 }
 
