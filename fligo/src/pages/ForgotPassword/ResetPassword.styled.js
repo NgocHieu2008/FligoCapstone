@@ -14,7 +14,7 @@ export const Wrapper = styled.section`
 export const DivStyled = styled.div`
   width: 50%;
   height: 100%;
-  background-color: #fff;
+  background-color: var(--white-color);
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -24,13 +24,13 @@ export const DivStyled = styled.div`
 `;
 
 export const Title = styled.h2`
-  color: #0e185f;
+  color: var(--blue-secondary-color);
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 40px;
 `;
 export const Subtitle = styled.h5`
-  color: ${(props) => (props.$primary ? "#0E185F" : "#000")};
+  color: ${(props) => (props.$primary ? "var(--blue-secondary-color)" : "var(--black-color)")};
   text-align: ${(props) => (props.$center ? "center" : "left")};
   margin-bottom: 10px;
 `;
@@ -38,7 +38,7 @@ export const Subtitle = styled.h5`
 export const Paragraph = styled.p`
   font-weight: lighter;
   font-size: 12px;
-  color: ${(props) => (props.$primary ? "red" : "#000")};
+  color: ${(props) => (props.$primary ? "red" : "var(--black-color)")};
   text-align: ${(props) => (props.$primary ? "center" : "justify")};
   margin-bottom: 30px;
 `;
@@ -58,17 +58,17 @@ export const Button = styled.button`
   padding: 10px 30px;
   width: fit-content;
   height: 40px;
-  background-color: ${(props) => (props.$secondary ? "#fff" : "#0e185f")};
-  color: ${(props) => (props.$secondary ? "#0e185f" : "#fff")};
+  background-color: ${(props) => (props.$secondary ? "var(--white-color)" : "var(--blue-secondary-color)")};
+  color: ${(props) => (props.$secondary ? "var(--blue-secondary-color)" : "var(--white-color)")};
   border-radius: 25px;
-  border: ${(props) => (props.$secondary ? " 1px solid #0e185f" : "none")};
+  border: ${(props) => (props.$secondary ? " 1px solid var(--blue-secondary-color)" : "none")};
   display: block;
   margin: 30px auto;
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => (props.$secondary ? "#0e185f" : "#fff")};
-    color: ${(props) => (props.$secondary ? "#fff" : "#0e185f")};
-    border: ${(props) => (props.$secondary ? "none" : "1px solid #0e185f")};
+    background-color: ${(props) => (props.$secondary ? "var(--blue-secondary-color)" : "var(--white-color)")};
+    color: ${(props) => (props.$secondary ? "var(--white-color)" : "var(--blue-secondary-color)")};
+    border: ${(props) => (props.$secondary ? "none" : "1px solid var(--blue-secondary-color)")};
     transition: 0.2s ease-in;
   }
 `;
@@ -79,7 +79,7 @@ export const Link = styled(Button)`
   background: none;
   /* text-transform: uppercase; */
   border: none;
-  color: #0e185f;
+  color: var(--blue-secondary-color);
   text-decoration: underline;
   display: block;
   margin: 20px auto 0;

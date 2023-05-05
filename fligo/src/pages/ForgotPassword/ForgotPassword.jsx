@@ -21,11 +21,11 @@ function ForgotPassword() {
 
     if (contactType === "email") {
       // input is email
-      url = "https://fligo-server.vercel.app/otp-reset/send-otp-email";
+      url = "https://fligo.vercel.app/otp/send-otp-email";
       body = JSON.stringify({ email: contact });
     } else {
       // input is phone number
-      url = "https://fligo-server.vercel.app/otp-reset/send-otp-sms";
+      url = "https://fligo.vercel.app/otp/send-otp-sms";
       const phoneNumber = contact.trim().startsWith("0")
         ? contact.trim().substring(1)
         : contact.trim();
@@ -51,11 +51,6 @@ function ForgotPassword() {
     const response = await sendOTP(contact, contactType);
 
     if (response.ok) {
-      const storedUsers = JSON.parse(localStorage.getItem("users"));
-      const user = storedUsers.find((users) => users[contactType] === contact);
-      if(user) {
-        setUsername(user.username)
-      }
       setPage("otp");
       setContact(contact);
       setContactType(contactType);

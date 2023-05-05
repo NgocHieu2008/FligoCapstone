@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import {
   Wrapper,
   DivStyled,
@@ -13,25 +13,38 @@ import { RecoveryContext } from "./ResetPassword";
 function Reset() {
   const passwordRef = useRef(null);
   const repeatPasswordRef = useRef(null);
-  const [users, setUsers] = useState([]);
   const { username, setPage } = useContext(RecoveryContext);
-  useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem("users"));
-    setUsers(storedUsers);
-  }, []);
 
   // console.log(users);
-  const handleConfirmClick = () => {
+  const handleConfirmClick = async () => {
     const newPassword = passwordRef.current.value;
     const repeatPassword = repeatPasswordRef.current.value;
     if (newPassword === repeatPassword) {
-      // Find the user in the "users" array
-      const userIndex = users.findIndex((user) => user.username === username);
-      const updatedUsers = [...users];
-      updatedUsers[userIndex].password = newPassword;
-      // Update the "users" array in localStorage
-      localStorage.setItem("users", JSON.stringify(updatedUsers));
-      setPage("");
+      try {
+        const response = await fetch(
+          "https://fligo.vercel.app/reset-password",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: newPassword,
+            }),
+          }
+        );
+        if (response.ok) {
+          alert("Password updated successfully!");
+          setPage("");
+        } else {
+          const error = await response.json();
+          alert(`An error occurred: ${error.message}`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred. Please try again!")
+      }
     } else {
       alert("The repeat password is not matched!");
     }
@@ -48,11 +61,11 @@ function Reset() {
           <Subtitle>
             New Password<span style={{ color: "red" }}>*</span>
           </Subtitle>
-          <TextField ref={passwordRef} />
+          <TextField type="password" ref={passwordRef} />
           <Subtitle style={{ marginTop: "30px" }}>
             Repeat New Password<span style={{ color: "red" }}>*</span>
           </Subtitle>
-          <TextField ref={repeatPasswordRef} />
+          <TextField type="password" ref={repeatPasswordRef} />
 
           <Button onClick={handleConfirmClick}>Confirm</Button>
         </DivStyled>
