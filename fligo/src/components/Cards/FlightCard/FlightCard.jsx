@@ -30,9 +30,11 @@ function FlightCard() {
     }, [])
 
     const handleChoose = (flight) => {
+
         console.log(flight);
         // lưu thông tin chuyến bay được chọn vào local storage
         localStorage.setItem('selectedFlight', JSON.stringify(flight));
+
         // Chuyển qua trang book seat 
         window.location.href = "/book-seat";
     }
@@ -53,6 +55,7 @@ function FlightCard() {
         <>
             {flights.map((flight) => (
             <Wrapper key = {flight._id}>
+
                 <div style={{display:"inline-flex", alignItems:"center"}}>
                     <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
                     <span style={{fontWeight:"700", marginLeft:"20px"}}>{flight.airline}</span>
@@ -77,6 +80,7 @@ function FlightCard() {
                     <SubWrapper>
                         <Price>US ${flight.price.$numberDecimal}</Price>
                         <Button onClick={() => handleChoose(flight)}>Choose</Button>
+
                     </SubWrapper>
                 </DetailWrapper>
                 <DetailButton onClick={() => handleShowDetail(flight)}>
