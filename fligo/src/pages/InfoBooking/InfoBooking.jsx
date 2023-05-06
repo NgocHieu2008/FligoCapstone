@@ -12,11 +12,19 @@ import {
   ButtonStyled,
   DetailWrapper,
   ImageStyled,
+  InforStyled,
+  InforItem
 } from "./InforBooking.styled";
 import { Formik } from "formik";
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
 import * as Yup from "yup";
 import image from "../../assets/flight.png";
+import { UserContext } from "~/contexts/UserContext";
+import { useContext, useState } from "react";
+import vietjet from "~/assets/vietjet-air-logo.png";
+import vietnamairline from "~/assets/vietnam-airline-logo.png";
+import arrow4 from "~/assets/Arrow 4.png";
+import ArrowIcon from "~/assets/Arrow 5.png";
 
 const PassengerSchema = Yup.object().shape({
   title: Yup.string().oneOf(["Mr.", "Ms."]).required("Required"),
@@ -30,11 +38,26 @@ const PassengerSchema = Yup.object().shape({
     .integer()
     .max(new Date().getFullYear(), `Invalid number of year`),
   nationality: Yup.string().required("Required"),
+  passport: Yup.string().required("Required"),
   dayExpire: Yup.number().required("Required").positive().integer(),
   monthExpire: Yup.number().required("Required").max(12),
   yearExpire: Yup.number().required("Required").positive().integer(),
 });
-function InfoBooking({ Submit }) {
+function InfoBooking() {
+
+  const { userData } = useContext(UserContext);
+  const flight = JSON.parse(localStorage.getItem("selectedFlight"));
+
+  const Submit = (values) => {
+    console.log(values);
+  };
+
+  const SubmitInfo = (values) => {
+    console.log(values);
+    localStorage.setItem("passengerInfo", JSON.stringify(values));
+    window.location.href = "/confirm-info";
+  };
+
   return (
     <>
       <BookingTitle title="Your Booking" active="booking" />
@@ -44,11 +67,11 @@ function InfoBooking({ Submit }) {
             <FormTitle>Contact Details</FormTitle>
             <Formik
               initialValues={{
-                firstname: "",
-                lastname: "",
+                firstname: '',
+                lastname: '',
                 countryCode: "",
-                mobileNo: "",
-                email: "",
+                phoneNumber: '',
+                email: '',
               }}
               onSubmit={Submit}
             >
@@ -58,14 +81,14 @@ function InfoBooking({ Submit }) {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" />
+                    <InputStyled name="firstname" value={userData?.firstname}/>
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" />
+                    <InputStyled name="lastname" value={userData?.lastname}/>
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <PhoneContainer>
@@ -92,7 +115,7 @@ function InfoBooking({ Submit }) {
                       <LabelStyled htmlFor="phoneNumber">
                         Phone Number <span>*</span>
                       </LabelStyled>
-                      <InputStyled name="phoneNumber" />
+                      <InputStyled name="phoneNumber" value={userData?.phoneNo}/>
                       <ErrorStyled component="div" name="phoneNumber" />
                     </FieldWrapper>
                   </PhoneContainer>
@@ -100,7 +123,7 @@ function InfoBooking({ Submit }) {
                     <LabelStyled htmlFor="email">
                       Email <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="email" />
+                    <InputStyled name="email" value={userData?.email}/>
                     <ErrorStyled component="div" name="email" />
                   </FieldWrapper>
                 </FormStyled>
@@ -125,7 +148,7 @@ function InfoBooking({ Submit }) {
                 yearExpire: "",
               }}
               validationSchema={PassengerSchema}
-              onSubmit={Submit}
+              onSubmit={SubmitInfo}
             >
               {({ setFieldValue }) => (
                 <FormStyled>
@@ -138,8 +161,8 @@ function InfoBooking({ Submit }) {
                       as="select"
                       onChange={(e) => setFieldValue("title", e.target.value)}
                     >
-                      <option value="mr">Mr.</option>
-                      <option value="ms">Ms.</option>
+                      <option value="Mr.">Mr.</option>
+                      <option value="Ms.">Ms.</option>
                     </InputStyled>
                     <ErrorStyled component="div" name="title" />
                   </FieldWrapper>
@@ -147,14 +170,14 @@ function InfoBooking({ Submit }) {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" />
+                    <InputStyled name="firstname" value={userData?.firstname}/>
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" />
+                    <InputStyled name="lastname" value={userData?.lastname}/>
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <DateContainer>
@@ -204,6 +227,13 @@ function InfoBooking({ Submit }) {
                     <InputStyled name="nationality" />
                     <ErrorStyled component="div" name="nationality" />
                   </FieldWrapper>
+                  <FieldWrapper>
+                    <LabelStyled htmlFor="passport">
+                      Passport <span>*</span>
+                    </LabelStyled>
+                    <InputStyled name="passport" />
+                    <ErrorStyled component="div" name="passport" />
+                  </FieldWrapper>
                   <DateContainer>
                     <FieldWrapper style={{ width: "32%" }}>
                       <LabelStyled htmlFor="dayExpire">
@@ -239,17 +269,46 @@ function InfoBooking({ Submit }) {
                       <ErrorStyled component="div" name="yearExpire" />
                     </FieldWrapper>
                   </DateContainer>
+                  <ButtonStyled type="submit">Continue</ButtonStyled>
                 </FormStyled>
               )}
             </Formik>
           </div>
-          <ButtonStyled type="submit">Continue</ButtonStyled>
+          
         </FormWrapper>
 
         <DetailWrapper>
           <ImageStyled>
             <img src={image} alt="" />
           </ImageStyled>
+          <InforStyled>
+            <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+              <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
+              <p style={{ marginTop:"20px"}}>{flight.airline}</p>
+            </div>
+            <img src={arrow4} alt="" style={{height:"100%"}} />
+            <InforItem>
+                <div style={{display:"inline-flex", alignItems:"center"}}>
+                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.departureCode}</p>
+                    <p>
+                    {flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]}
+                    </p>
+                  </div>
+                  <img src={ArrowIcon} alt="" style={{height:"15px", margin:"0 20px"}}/>
+                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
+                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.arrivalCode}</p>
+                    <p>
+                    {flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]}
+                    </p>
+                  </div>
+                </div>
+                <p style={{color:"gray", marginTop:"20px"}}>
+                  {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
+                </p>
+            </InforItem>
+          </InforStyled>
+          <p style={{color:"#0E185F", marginBottom:"10px"}}>Flight Detail</p>
         </DetailWrapper>
       </Wrapper>
     </>

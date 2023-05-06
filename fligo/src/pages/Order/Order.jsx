@@ -1,5 +1,5 @@
 import SearchBar from "~/components/SearchBar/SearchBar";
-import {SearchWrapper, TimeLineWrapper, ContentWrapper, FilterWrapper, FlightWrapper, Filter,FilterTitle, Form, Label} from "./Order.styled";
+import {SearchWrapper,TimeLineWrapper, ContentWrapper, FilterWrapper, FlightWrapper, Filter,FilterTitle, Form, Label} from "./Order.styled";
 import FlightCard from "~/components/Cards/FlightCard/FlightCard";
 import sort from "~/assets/sort.png";
 
@@ -9,6 +9,9 @@ function Order() {
 
     return ( 
         <>
+        <SearchWrapper>
+                <SearchBar/>
+            </SearchWrapper>
             <TimeLineWrapper>Timeline</TimeLineWrapper>
             <ContentWrapper>
                 <FilterWrapper>

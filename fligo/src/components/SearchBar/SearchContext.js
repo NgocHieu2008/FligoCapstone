@@ -30,26 +30,31 @@ function SearchProvider({ children }) {
   }, []);
   
 
-  const onSearch = async (event) => {
-    const result = await fetch(`http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}`)
-      .then((res) => res.json())
-
-      console.log(result.data);
-    const flights = result.data;
-      // Lưu kết quả tìm kiếm vào state searchResult
-      setSearchResult(flights);
-      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
-  // nếu đang ở trang home thì chuyển qua trang order (để hiển thị kết quả tìm kiếm)
-      if(window.location.pathname === "/home"){
-      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
-      window.location.href = "/order";
+  const onSearch = async () => {
+  // toLocation must be different from fromLocation
+  if (fromLocation === toLocation) {
+    alert("Please choose different locations");
+    return;
   }
 
-  if (window.location.pathname === "/order") {
-      localStorage.setItem("searchBarContent", JSON.stringify({fromLocation, toLocation, departureDate, flights}));
-  }
+  // fetch data from server
+  const response = await fetch(
+    `http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}`
+  );
+  const data = await response.json();
+  setSearchResult(data.data);
+  // save search bar content to local storage
+  localStorage.setItem(
+    "searchBarContent",
+    JSON.stringify({
+      fromLocation,toLocation,departureDate,flights:data.data}));
 
+  // redirect to search result page
+  if(window.location.href !== "/order")
+    window.location.href = "/order";
   };
+
+
 
   const value = {fromLocation,setFromLocation, toLocation, setToLocation, departureDate, setDepartureDate, searchResult, setSearchResult, onSearch};
 

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SeatMap from "~/components/Seats/SeatMap";
 import { SeatMapContainer,TitleWrapper, SubTitle, BlackText, GrayText, ContentWrapper,LeftContent,RightContent,DefinedSeat, Button } from "./BookSeat.styled";
 import SeatIcon from "~/assets/Seat.png";
 import ArrowIcon from "~/assets/Arrow 5.png";
+import { UserContext } from "~/contexts/UserContext";
+
 
 const seats = [
     { row: 1, column: 'A', status: 'Available' },
@@ -140,6 +142,8 @@ const seats = [
   ];
 
 function BookSeat() {
+    const { userData } = useContext(UserContext);
+    console.log(userData);
     const [selectedSeat, setSelectedSeat] = useState({});
 
     // get thông tin chuyến bay được chọn từ localStorage
@@ -189,7 +193,7 @@ function BookSeat() {
         <ContentWrapper>
             <LeftContent>
                 <div>
-                    <BlackText>User name</BlackText>
+                    <BlackText>Passenger {userData?.firstname} {userData?.lastname}</BlackText>
                     <h3 style={{color:"#0E185F"}}>SEAT: {selectedSeat.row}{selectedSeat.column}</h3>
                 </div>
             </LeftContent>

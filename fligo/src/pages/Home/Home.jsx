@@ -44,8 +44,11 @@ function Home() {
                     />
                 </ChatBotContainer> : null }
             </ChatWrapper>
-
+            <SearchWrapper>
+                <SearchBar/>
+            </SearchWrapper>
             <BannerSlider banner1={banner1} banner2={banner2} banner3={banner3}/>
+            
             <div style={{marginBottom:"50px"}}>
                 <SectionTitle>Additional Service</SectionTitle>
                 <BoxWrapper>
