@@ -87,6 +87,10 @@ function Header() {
     setShowLoginForm(false);
   };
 
+  const handleLogoClick = () => {
+    window.location.href = "/"
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -112,7 +116,7 @@ function Header() {
   return (
     <>
       <Wrapper ref={ref} className="wrapper">
-        <Logo src={logo} alt="" />
+        <Logo onClick={handleLogoClick} src={logo} alt="" />
         <NavbarDiv className="navbar">
           <Navbar>
             <NavbarItem>
