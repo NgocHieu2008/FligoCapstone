@@ -142,10 +142,24 @@ const seats = [
 function BookSeat() {
     const [selectedSeat, setSelectedSeat] = useState({});
 
+    // get thông tin chuyến bay được chọn từ localStorage
+    const flightInfo = JSON.parse(localStorage.getItem('selectedFlight'));
+
   const handleSeatSelected = (row, column) => {
     // Cập nhật thông tin về ghế được chọn vào state
     setSelectedSeat({ row, column });
   };
+
+  const handleDone = () => {
+    if(selectedSeat.row && selectedSeat.column) {
+        // Lưu thông tin về ghế được chọn vào localStorage
+    localStorage.setItem('selectedSeat', JSON.stringify(selectedSeat));
+    // direct to payment page
+    window.location.href = '/info-booking';}
+    else {
+        alert("Please choose your seat!");
+    }
+    };
     return ( 
         <>
         <TitleWrapper>
@@ -154,16 +168,22 @@ function BookSeat() {
         </TitleWrapper>
         <SubTitle>
             <div>
-                <BlackText>Ho Chi Minh City (SGN)</BlackText>
+                <BlackText>{flightInfo.departure} ({flightInfo.departureCode})</BlackText>
                 <img src={ArrowIcon} alt="Arrow" />
-                <BlackText>Ha Noi (HAN)</BlackText>
+                <BlackText>{flightInfo.arrival} ({flightInfo.arrivalCode})</BlackText>
             </div>
             <div>
-                <GrayText>10:30 - 12:30</GrayText>
+                <GrayText>
+                {flightInfo.departure_time.split("T")[1].split(":")[0] + ":" + flightInfo.departure_time.split("T")[1].split(":")[1]}
+                 - 
+                {flightInfo.arrival_time.split("T")[1].split(":")[0] + ":" + flightInfo.arrival_time.split("T")[1].split(":")[1]}
+                </GrayText>
                 <GrayText>|</GrayText>
-                <GrayText>Fri, 12 May, 2023</GrayText>
+                <GrayText>
+                    {flightInfo.departure_time.split("T")[0].split("-")[2] + "-" + flightInfo.departure_time.split("T")[0].split("-")[1] + "-" + flightInfo.departure_time.split("T")[0].split("-")[0]}
+                </GrayText>
                 <GrayText>|</GrayText>
-                <GrayText>Vietnam Airlines</GrayText>
+                <GrayText>{flightInfo.airline}</GrayText>
             </div>
         </SubTitle>
         <ContentWrapper>
@@ -216,7 +236,7 @@ function BookSeat() {
                     <SeatMap seats={seats} onSeatSelected={handleSeatSelected}/>
                     
                 </SeatMapContainer>
-                <Button>Book</Button>
+                <Button onClick={handleDone}>Done</Button>
             </RightContent>
         </ContentWrapper>
         </>
