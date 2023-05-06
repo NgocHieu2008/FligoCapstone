@@ -9,9 +9,6 @@ import React, { useState, useEffect } from 'react';
 
 function FlightCard() {
 
-    const [selectedFlight, setSelectedFlight] = useState(null);
-    const [showDetail, setShowDetail] = useState(false);
-
     const [flights, setFlights] = useState([]);
 
     // get result from local storage

@@ -21,7 +21,8 @@ import {
 } from "./Header.styled.js";
 import { Link } from 'react-router-dom';
 import logo from "../../../../assets/Asset3.png";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { UserContext } from "~/contexts/UserContext.js";
 
 
 function Header() {
@@ -31,6 +32,7 @@ function Header() {
   const [password, setPassword] = useState("");
   const ref = useRef();
   const [errorMessage, setErrorMessage] = useState(null);
+  const { setUserData } = useContext(UserContext);
 
   const handleLoginClick = () => {
     setShowLoginForm(!showLoginForm);
@@ -64,6 +66,20 @@ function Header() {
         if (data.status === "Ok") {
           // save token to local storage
           localStorage.setItem("token", data.data);
+          // get user data and update UserContext
+          fetch("/userData", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: data.data }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.status === "Ok") {
+                setUserData(data.data);
+              }
+            });
           // hide login form
           setShowLoginForm(false);
           // reset form

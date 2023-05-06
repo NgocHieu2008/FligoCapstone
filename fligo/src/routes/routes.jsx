@@ -19,8 +19,8 @@ const publicRoutes = [
 ]
 
 const privateRoutes = [
-    {path:'/home', component:Home, layout: SecondaryLayout},
-    {path:'/order', component: Order, layout: SecondaryLayout},
+    {path:'/home', component:Home},
+    {path:'/order', component: Order},
     {path:'/info-booking', component:InfoBooking},
     {path:'/confirm-info', component: ConfirmInfo},
     {path:'/payment', component: Payment},

@@ -102,20 +102,36 @@ export const ButtonStyled = styled.button`
 `;
 
 export const DetailWrapper = styled.div`
-    width: 35%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: var(--white-color);
     overflow: hidden;
+    align-items: center;
 `
 
 export const ImageStyled = styled.div`
-    object-fit: cover;
-    height: 250px;
+    width: 100%;
+    height: 50%;
+    border-radius: 5px 5px 0 0;
 `
 
 export const InforStyled = styled.div`
-    
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`
+
+export const InforItem = styled.div`
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 `

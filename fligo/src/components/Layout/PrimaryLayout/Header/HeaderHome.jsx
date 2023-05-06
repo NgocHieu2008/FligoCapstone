@@ -12,33 +12,13 @@ import {
   } from "~/components/Layout/DefaultLayout/Header/Header.styled.js";
 import {UserContainer, CustomerIcon, MenuList} from "~/components/Layout/PrimaryLayout/Header/HeaderHome.styled.jsx";
 import logo from "../../../../assets/Asset3.png";
-
-import {useRef, useState, useEffect } from "react";
+import { UserContext } from "~/contexts/UserContext";
+import {useRef, useState, useEffect, useContext } from "react";
 function HeaderHome() {
     const ref = useRef();
-
-    //check if user is logged in
-    const [loggedInUser, setLoggedInUser] = useState(null);
+    const { userData } = useContext(UserContext);
     const [showAccountMenu, setShowAccountMenu] = useState(false);
-    // check token in local storage
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-      if(token){
-          fetch("http://localhost:8000/userData",{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.status === "Ok") {
-              setLoggedInUser(data);
-            }
-          });
-      }
-    }, []);
+   
     //click on account icon
     const handleAccountClick = () => {
         console.log("clicked");
@@ -70,21 +50,8 @@ function HeaderHome() {
 
     // click on logout
     const handleLogout = () => {
-      localStorage.removeItem("token");
-      setLoggedInUser(null);
-      fetch("http://localhost:8000/logout", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          window.location.href = "/";
-        }
-        );
-
+        localStorage.removeItem("token");
+        window.location.href = "/";
     };
     
     return ( 
@@ -115,11 +82,11 @@ function HeaderHome() {
         </NavbarDiv>
         <ButtonWrapper>
             
-            {loggedInUser ? (
+            {userData ? (
                 <div>
                   <UserContainer onClick={handleAccountClick}>
                       <CustomerIcon/>
-                      {loggedInUser.data.firstname}
+                      {userData.firstname}
                   </UserContainer>
                   {showAccountMenu ? (
                       <MenuList>
@@ -133,7 +100,7 @@ function HeaderHome() {
                 </div>
             ) : (
                 <></>)}
-                <Button>
+            <Button>
              <Icon/>
              <span>English</span>
             </Button>
