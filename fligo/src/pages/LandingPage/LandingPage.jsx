@@ -5,6 +5,10 @@ import PopularFlightCard from '~/components/Cards/PopularFlightCard/PopularFligh
 import banner1 from "~/assets/Baner 1.jpg"
 import banner2 from "~/assets/Baner 2.gif"
 import banner3 from "~/assets/Baner 3.jpg"
+import service1 from "~/assets/airport-car-service.jpg"
+import service2 from "~/assets/service2.jpg"
+import service3 from "~/assets/service3.jfif"
+import service4 from "~/assets/service4.jpg"
 
 function LandingPage() {
     return ( 
@@ -22,20 +26,20 @@ function LandingPage() {
                 <SessionTitle>Additional Service</SessionTitle>
                 <SubSession>
                     <Item>
-                        <img src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/29/57/12.jpg" alt="img" />
-                        <h3>Prepaid Baggage</h3>
+                        <img src={service1} alt="img" />
+                        <h3>Airport Transfer</h3>
                     </Item>
                     <Item>
-                        <img src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/29/57/12.jpg" alt="img" />
-                        <h3>Flight Delay/Cancelation</h3>
+                        <img src={service2} alt="img" />
+                        <h3>Tour with Fligo</h3>
                     </Item>
                     <Item>
-                        <img src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/29/57/12.jpg" alt="img" />
+                        <img src={service3} alt="img" />
                         <h3>Meet & Greet Service</h3>
                     </Item>
                     <Item>
-                        <img src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/29/57/12.jpg" alt="img" />
-                        <h3>Paid Meal Service</h3>
+                        <img src={service4} alt="img" />
+                        <h3>Booking Hotel</h3>
                     </Item>
                 </SubSession>
             </SecondSessionContainer>

@@ -319,19 +319,19 @@ function InfoBooking() {
                   <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                     <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.departureCode}</p>
                     <p>
-                    {moment(flight.departure_time).format("HH:mm")}
+                    {moment.utc(flight.departure_time).format("HH:mm")}
                     </p>
                   </div>
                   <img src={ArrowIcon} alt="" style={{height:"15px", margin:"0 20px"}}/>
                   <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                     <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.arrivalCode}</p>
                     <p>
-                    {moment(flight.arrival_time).format("HH:mm")}
+                    {moment.utc(flight.arrival_time).format("HH:mm")}
                     </p>
                   </div>
                 </div>
                 <p style={{color:"gray", marginTop:"20px"}}>
-                  {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
+                  {moment.utc(flight.departure_time).format("ddd, DD MMM YYYY")}
                 </p>
             </InforItem>
           </InforStyled>

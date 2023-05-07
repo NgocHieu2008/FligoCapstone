@@ -17,13 +17,13 @@ function SuccessBooking() {
     const total = price.flightPrice + price.insurancePrice + price.serviceFee;
     
 
-    const date = moment(flightData.departure_time);
+    const date = moment.utc(flightData.departure_time);
     const departDate = date.format('dddd, MMMM Do YYYY');
     const departTime = date.format('HH:mm');
-    const arriTime = moment(flightData.arrival_time).format('HH:mm');
-    const directTime = moment(flightData.arrival_time).diff(moment(flightData.departure_time), 'hours', true);
+    const arriTime = moment.utc(flightData.arrival_time).format('HH:mm');
+    const directTime = moment.utc(flightData.arrival_time).diff(moment(flightData.departure_time), 'hours', true);
 
-    const orderTime = moment(data.timeOrder).format('MMMM Do YYYY, h:mm:ss a');
+    const orderTime = moment.utc(data.timeOrder).format('MMMM Do YYYY, h:mm:ss a');
     return ( 
         <Wrapper>
             <Title>BOOKING SUCCESSFUL</Title>

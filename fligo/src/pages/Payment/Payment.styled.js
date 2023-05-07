@@ -1,6 +1,18 @@
 import styled from "styled-components";
 import { Form, Field, ErrorMessage } from "formik";
+import Modal from 'react-modal';
 
+export const ModalStyled = styled(Modal)`
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  outline: none;
+  padding: 20px;
+  z-index: 9999;
+`;
 export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
@@ -155,3 +167,12 @@ export const FlightWrapper = styled.div`
     }
 
     `;
+
+export const FlightDetailBtn = styled.button`
+    color:#2A8CFF;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+`;

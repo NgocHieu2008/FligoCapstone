@@ -153,7 +153,7 @@ function ConfirmInfo() {
                         </ItemTitle>
                         <div style={{padding:"10px 30px"}}>
                             <SubHead><span>Departure: </span>
-                             {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
+                             {moment.utc(flight.departure_time).format("ddd, DD MMM YYYY")}
                             </SubHead>
                             <DetailItem>
                                 <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
@@ -161,19 +161,19 @@ function ConfirmInfo() {
                                 <DetailWrapper>
                                     <SubWrapper>
                                         <Time>{
-                                            moment(flight.departure_time).format("HH:mm")
+                                            moment.utc(flight.departure_time).format("HH:mm")
                                         }</Time>
                                         <Location>{flight.departureCode}</Location>
                                     </SubWrapper>
                                     <SubWrapper>
                                         <Direct>{
-                                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'hours') + "h " + moment(flight.arrival_time).diff(moment(flight.departure_time), 'minutes')%60 + "m"
+                                            moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'hours') + "h " + moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'minutes')%60 + "m"
                                         } (Direct)</Direct>
                                         <img src={direct} alt="direct"/>
                                     </SubWrapper>
                                     <SubWrapper>
                                         <Time>{
-                                            moment(flight.arrival_time).format("HH:mm")
+                                            moment.utc(flight.arrival_time).format("HH:mm")
                                         }</Time>
                                         <Location>{flight.arrivalCode}</Location>
                                     </SubWrapper>
@@ -234,13 +234,13 @@ function ConfirmInfo() {
                                 </div>
                                 <div>
                                     <GrayText>
-                                    {moment(flight.departure_time).format("HH:mm")}
+                                    {moment.utc(flight.departure_time).format("HH:mm")}
                                     - 
-                                    {moment(flight.arrival_time).format("HH:mm")}
+                                    {moment.utc(flight.arrival_time).format("HH:mm")}
                                     </GrayText>
                                     <GrayText style={{margin:"0 5px"}}>|</GrayText>
                                     <GrayText>
-                                        {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
+                                        {moment.utc(flight.departure_time).format("ddd, DD MMM YYYY")}
                                     </GrayText>
                                     <GrayText style={{margin:"0 5px"}}>|</GrayText>
                                     <GrayText>{flight.airline}</GrayText>

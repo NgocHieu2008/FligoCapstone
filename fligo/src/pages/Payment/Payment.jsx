@@ -1,5 +1,5 @@
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
-import { Wrapper, Left, Middle, Right,Button, FlightWrapper} from "./Payment.styled";
+import { Wrapper, Left, Middle, Right,Button, FlightWrapper, FlightDetailBtn, ModalStyled} from "./Payment.styled";
 import { useState } from "react";
 import Visa from "./Visa";
 import Momo from "./Momo";
@@ -7,6 +7,7 @@ import CreditCard from "./CreditCard";
 import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
 import moment from 'moment';
+import FlightDetail from "~/components/Cards/FlightDetail/FlightDetail";
 
 function Payment() {
     const [activeButton, setActiveButton] = useState(1);
@@ -36,6 +37,16 @@ function Payment() {
         setActiveButton(buttonId);
     };
 
+    const [showPopup, setShowPopup] = useState(false);
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  }
+
     return ( 
         <>
         <BookingTitle title="Payment" active="payment" />
@@ -53,10 +64,13 @@ function Payment() {
                 <FlightWrapper>
                     <div style={{display:"inline-flex",justifyContent:"space-between"}}>
                         <h3>Flight Infomation</h3>
-                        <h3 style={{color:"#2A8CFF"}}>Details</h3>
+                        <FlightDetailBtn onClick={handleOpenPopup}>Details</FlightDetailBtn>
+                        <ModalStyled isOpen={showPopup} onRequestClose={handleClosePopup} ariaHideApp={false}>
+                        <FlightDetail flight={flight} />
+                        </ModalStyled>
                     </div>
                     <h3>
-                    {moment(flight.departureTime).format("ddd, DD MMM YYY")}
+                    {moment.utc(flight.departure_time).format("ddd, DD MMM YYYY")}
                     </h3>
                     <div style={{display:"inline-flex",justifyContent:"space-between", marginBottom:"20px"}}>
                         <p>{flight.departure} ({flight.departureCode})</p>

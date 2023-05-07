@@ -1,4 +1,6 @@
 import image1 from "~/assets/bitexco-tower.jpg";
+import image2 from "~/assets/ha-long.jpg";
+import image3 from "~/assets/cauvang.jpg";
 
 export const PopularFlight = [
     {
@@ -12,12 +14,12 @@ export const PopularFlight = [
     },
     {
         id: 2,
-        title: "Da Lat to Ha Noi",
+        title: "Ho Chi Minh to Ha Long",
         depart: "4/6/2023",
         price: 35,
         type: "Economy",
         way: "One way",
-        image: image1
+        image: image2
     },
     {
         id: 3,
@@ -26,6 +28,6 @@ export const PopularFlight = [
         price: 45,
         type: "Economy",
         way: "One way",
-        image: image1
+        image: image3
     },
 ]
