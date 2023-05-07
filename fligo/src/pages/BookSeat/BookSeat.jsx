@@ -144,7 +144,6 @@ const seats = [
 function BookSeat() {
     const { userData } = useContext(UserContext);
     console.log(userData);
-    
     const [selectedSeat, setSelectedSeat] = useState({});
 
     // get thông tin chuyến bay được chọn từ localStorage

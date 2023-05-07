@@ -1,6 +1,7 @@
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
 import { ConfirmInfoWrapper, Heading, ConfirmContainer, ConfirmLeft, ConfirmRight, ConfirmItem, SubHead, EditButton, 
     ItemTitle, DetailItem, GreenText, Insurance, Input, ButtonStyled,ButtonStyled2 } from "./ConfirmInfo.styled";
+
 import { SubWrapper, DetailWrapper, Time, Location, Direct} from "~/components/Cards/FlightCard/FlightCard.styled";
 import { BlackText, GrayText} from "~/pages/BookSeat/BookSeat.styled";
 
@@ -87,6 +88,7 @@ function ConfirmInfo() {
     const handleEdit = () => {
         window.location.href = "/info-booking";
     }
+
 
     const [showPopup, setShowPopup] = useState(false);
 
