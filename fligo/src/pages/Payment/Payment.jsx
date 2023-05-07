@@ -6,6 +6,7 @@ import Momo from "./Momo";
 import CreditCard from "./CreditCard";
 import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
+import moment from 'moment';
 
 function Payment() {
     const [activeButton, setActiveButton] = useState(1);
@@ -55,7 +56,7 @@ function Payment() {
                         <h3 style={{color:"#2A8CFF"}}>Details</h3>
                     </div>
                     <h3>
-                    {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
+                    {moment(flight.departureTime).format("ddd, DD MMM YYY")}
                     </h3>
                     <div style={{display:"inline-flex",justifyContent:"space-between", marginBottom:"20px"}}>
                         <p>{flight.departure} ({flight.departureCode})</p>

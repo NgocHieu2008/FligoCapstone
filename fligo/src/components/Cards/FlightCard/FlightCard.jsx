@@ -4,6 +4,7 @@ import vietnamairline from "~/assets/vietnam-airline-logo.png";
 import direct from "~/assets/Arrow 2.png";
 import detail from "~/assets/detail.png";
 import FlightDetail from "../FlightDetail/FlightDetail";
+import moment from 'moment';
 
 import React, { useState, useEffect } from 'react';
 
@@ -60,7 +61,7 @@ function FlightCard() {
                 <DetailWrapper>
                     <SubWrapper>
                         <Time>{
-                            flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]
+                            moment(flight.departure_time).format('HH:mm')
                         }</Time>
                         <Location>{flight.departureCode}</Location>
                     </SubWrapper>
@@ -70,7 +71,7 @@ function FlightCard() {
                     </SubWrapper>
                     <SubWrapper>
                         <Time>{
-                            flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]
+                            moment(flight.arrival_time).format('HH:mm')
                         }</Time>
                         <Location>{flight.arrivalCode}</Location>
                     </SubWrapper>

@@ -133,6 +133,13 @@ export const ButtonStyled = styled.button`
     &:hover {
         background: #fff;
         color: var(--green-primary-color);
-        border: 1px solid var(--green-primary-color);
+        border: 1px solid var(--green-primary-color);}
 
     `;
+
+export const ButtonStyled2 = styled.p`
+        text-align:end;
+        font-weight:700;
+        color:#2A8CFF;
+        cursor: pointer;
+      `;

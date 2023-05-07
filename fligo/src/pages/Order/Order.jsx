@@ -22,15 +22,15 @@ function Order() {
                         </FilterTitle>
                         <Form>
                             <Label>
-                                <input name="sort" type="checkbox" value="lowest price"/>
+                                <input name="sort" type="radio" value="lowest price"/>
                                 Lowest Price
                             </Label>
                             <Label>
-                                <input name="sort" type="checkbox" value="earliest departure"/>
+                                <input name="sort" type="radio" value="earliest departure"/>
                                 Earliest Departure
                             </Label>
                             <Label>
-                                <input name="sort" type="checkbox" value="earliest arrival"/>
+                                <input name="sort" type="radio" value="earliest arrival"/>
                                 Earliest Arrival
                             </Label>
                         </Form>

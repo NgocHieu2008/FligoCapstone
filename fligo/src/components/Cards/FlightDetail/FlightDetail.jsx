@@ -5,6 +5,7 @@ import location from '~/assets/Location.png';
 import flighticon from '~/assets/flight_icon.png';
 import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
+import moment from 'moment';
 
 import {Wrapper, SubWrapper, BlackText, GrayText, DetailWrapper} from "./FlightDetail.styled";
 function FlightDetail({ flight, onClose }) {
@@ -13,27 +14,34 @@ function FlightDetail({ flight, onClose }) {
             <SubWrapper>
                 <SubWrapper>
                     <BlackText>{
-                        flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]
+                        moment(flight.departure_time).format('HH:mm')
                     }</BlackText>
                     <GrayText>
                         {
-                            flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]
+                            moment(flight.departure_time).format('DD MMMM')
                         }
                     </GrayText>
                 </SubWrapper>
                 <p>
                     <img src={flighticon} alt="flighticon"/>
-                    <GrayText>2h 10m</GrayText>
+                    <GrayText>
+                        {
+                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'hours', true)
+                        }h 
+                        {
+                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'minutes', true) % 60
+                        }m
+                    </GrayText>
                 </p>
                 <SubWrapper>
                     <BlackText>
                         {
-                            flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]
+                            moment(flight.arrival_time).format('HH:mm')
                         }
                     </BlackText>
                     <GrayText>
                         {
-                            flight.arrival_time.split("T")[0].split("-")[2] + "-" + flight.arrival_time.split("T")[0].split("-")[1] + "-" + flight.arrival_time.split("T")[0].split("-")[0]
+                            moment(flight.arrival_time).format('DD MMMM')
                         }
                     </GrayText>
                 </SubWrapper>
@@ -59,7 +67,7 @@ function FlightDetail({ flight, onClose }) {
                 <div style={{display:"inline-flex"}}>
                     <img src={baggage} alt="baggage" style={{height:"30px"}}/>
                     <div style={{display:"flex",flexDirection:"column"}}>
-                        <BlackText>Baggage {flight.baggage} kg (buy at booking)</BlackText>
+                        <BlackText>Baggage {flight.baggage} (buy at booking)</BlackText>
                         <BlackText>Cabin baggage 7 kg</BlackText>
                     </div>
                 </div>

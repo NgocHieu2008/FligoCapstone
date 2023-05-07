@@ -3,6 +3,13 @@ import { Wrapper, Title, Image, ButtonWrapper, Button } from "./SuccessPayment.s
 import congratsImage from "../../assets/congrats.png"
 
 function SuccessPayment() {
+
+  const handleDetails = () => {
+    window.location.href = "/success-booking";
+  }
+  const handleHistory = () => {
+    window.location.href = "/history";
+  }
   return (
     <>
       <BookingTitle active="success" />
@@ -10,8 +17,8 @@ function SuccessPayment() {
         <Title>Your booking was made successful!</Title>
         <Image src={congratsImage} alt="" />
         <ButtonWrapper>
-            <Button>Details</Button>
-            <Button $secondary >Booking History</Button>
+            <Button onClick={handleDetails}>Details</Button>
+            <Button onClick={handleHistory} $secondary >Booking History</Button>
         </ButtonWrapper>
       </Wrapper>
     </>
