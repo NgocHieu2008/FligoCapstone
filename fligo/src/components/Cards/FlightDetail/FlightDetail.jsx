@@ -14,11 +14,12 @@ function FlightDetail({ flight, onClose }) {
             <SubWrapper>
                 <SubWrapper>
                     <BlackText>{
-                        moment(flight.departure_time).format('HH:mm')
+                        moment.utc(flight.departure_time).format('HH:mm')
+                        
                     }</BlackText>
                     <GrayText>
                         {
-                            moment(flight.departure_time).format('DD MMMM')
+                            moment.utc(flight.departure_time).format('DD MMMM')
                         }
                     </GrayText>
                 </SubWrapper>
@@ -26,22 +27,23 @@ function FlightDetail({ flight, onClose }) {
                     <img src={flighticon} alt="flighticon"/>
                     <GrayText>
                         {
-                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'hours', true)
+                            moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'hours', true)
                         }h 
                         {
-                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'minutes', true) % 60
+                            moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'minutes', true) % 60
                         }m
                     </GrayText>
                 </p>
                 <SubWrapper>
                     <BlackText>
                         {
-                            moment(flight.arrival_time).format('HH:mm')
+                            moment.utc(flight.arrival_time).format('HH:mm')
                         }
                     </BlackText>
                     <GrayText>
                         {
-                            moment(flight.arrival_time).format('DD MMMM')
+
+                            moment.utc(flight.arrival_time).format('DD MMMM')
                         }
                     </GrayText>
                 </SubWrapper>

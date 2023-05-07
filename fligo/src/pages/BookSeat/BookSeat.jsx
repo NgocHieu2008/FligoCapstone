@@ -178,13 +178,13 @@ function BookSeat() {
             </div>
             <div>
                 <GrayText>
-                {moment(flightInfo.departure_time).format("HH:mm")}
+                {moment.utc(flightInfo.departure_time).format("HH:mm")}
                  - 
-                {moment(flightInfo.arrival_time).format("HH:mm")}
+                {moment.utc(flightInfo.arrival_time).format("HH:mm")}
                 </GrayText>
                 <GrayText>|</GrayText>
                 <GrayText>
-                {moment(flightInfo.departure_time).format("ddd, DD MMM YYYY")}
+                {moment.utc(flightInfo.departure_time).format("ddd, DD MMM YYYY")}
                 </GrayText>
                 <GrayText>|</GrayText>
                 <GrayText>{flightInfo.airline}</GrayText>

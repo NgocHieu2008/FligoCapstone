@@ -10,7 +10,7 @@ function SignUp() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [contactType, setContactType] = useState("email"); // ["email", "phone"
+  const [contactType, setContactType] = useState("email"); // ["email", "phone"]
   const [value, setValue] = useState();
 
   const handleSignup =  async (value) => {
@@ -48,10 +48,10 @@ function SignUp() {
       setContactType("email");
       url = "https://fligo.vercel.app/otp/send-otp-email";
       body = JSON.stringify({ email: email });
-    }
-
-    if (contactType === "phone") {
+    } else {
       setContactType("phone");
+      console.log("phone");
+      console.log(phone);
       url = "https://fligo.vercel.app/otp/send-otp-sms";
       const phoneNumber = phone.trim().startsWith("0")
         ? phone.trim().substring(1)
