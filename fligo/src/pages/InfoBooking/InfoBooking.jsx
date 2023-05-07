@@ -13,14 +13,14 @@ import {
   DetailWrapper,
   ImageStyled,
   InforStyled,
-  InforItem
+  InforItem,
 } from "./InforBooking.styled";
 import { Formik } from "formik";
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
 import * as Yup from "yup";
 import image from "../../assets/flight.png";
 import { UserContext } from "~/contexts/UserContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
 import arrow4 from "~/assets/Arrow 4.png";
@@ -38,22 +38,37 @@ const PassengerSchema = Yup.object().shape({
     .integer()
     .max(new Date().getFullYear(), `Invalid number of year`),
   nationality: Yup.string().required("Required"),
-  passport: Yup.string().required("Required"),
+  passport: Yup.string()
+    .required("Required")
+    .matches(/^\d{8}$/, "Passport number must be 8 digits"),
   dayExpire: Yup.number().required("Required").positive().integer(),
   monthExpire: Yup.number().required("Required").max(12),
   yearExpire: Yup.number().required("Required").positive().integer(),
+  // .test(
+  //   "expiration-date",
+  //   "Passport has expired",
+  //   ({ dayExpire, monthExpire, yearExpire }) => {
+  //     const expirationDate = new Date(yearExpire, monthExpire - 1, dayExpire);
+  //     const today = new Date();
+  //     return expirationDate >= today;
+  //   }
+  // ),
 });
-function InfoBooking() {
 
+function InfoBooking() {
   const { userData } = useContext(UserContext);
   const flight = JSON.parse(localStorage.getItem("selectedFlight"));
-
+  // console.log(seat);
   const Submit = (values) => {
     console.log(values);
   };
 
-  const SubmitInfo = (values) => {
+  // console.log(userData);
+  // console.log(userData?.firstname);
+
+  const SubmitInfo = async (values) => {
     console.log(values);
+    console.log("Hi");
     localStorage.setItem("passengerInfo", JSON.stringify(values));
     window.location.href = "/confirm-info";
   };
@@ -67,11 +82,11 @@ function InfoBooking() {
             <FormTitle>Contact Details</FormTitle>
             <Formik
               initialValues={{
-                firstname: '',
-                lastname: '',
+                firstname: "",
+                lastname: "",
                 countryCode: "",
-                phoneNumber: '',
-                email: '',
+                phoneNumber: "",
+                email: "",
               }}
               onSubmit={Submit}
             >
@@ -81,14 +96,14 @@ function InfoBooking() {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" value={userData?.firstname}/>
+                    <InputStyled name="firstname" value={userData?.firstname} />
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" value={userData?.lastname}/>
+                    <InputStyled name="lastname" value={userData?.lastname} />
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <PhoneContainer>
@@ -115,7 +130,10 @@ function InfoBooking() {
                       <LabelStyled htmlFor="phoneNumber">
                         Phone Number <span>*</span>
                       </LabelStyled>
-                      <InputStyled name="phoneNumber" value={userData?.phoneNo}/>
+                      <InputStyled
+                        name="phoneNumber"
+                        value={userData?.phoneNo}
+                      />
                       <ErrorStyled component="div" name="phoneNumber" />
                     </FieldWrapper>
                   </PhoneContainer>
@@ -123,21 +141,20 @@ function InfoBooking() {
                     <LabelStyled htmlFor="email">
                       Email <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="email" value={userData?.email}/>
+                    <InputStyled name="email" value={userData?.email} />
                     <ErrorStyled component="div" name="email" />
                   </FieldWrapper>
                 </FormStyled>
               )}
             </Formik>
           </div>
-
           <div className="passenger">
             <FormTitle>Passenger Details</FormTitle>
             <Formik
               initialValues={{
-                title: "",
-                firstname: "",
-                lastname: "",
+                title: "Mr.",
+                firstname: userData?.firstname ?? "",
+                lastname: userData?.lastname ?? "",
                 dayOfBirth: "",
                 monthOfBirth: "",
                 yearOfBirth: "",
@@ -170,14 +187,14 @@ function InfoBooking() {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" value={userData?.firstname}/>
+                    <InputStyled name="firstname" />
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" value={userData?.lastname}/>
+                    <InputStyled name="lastname" />
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <DateContainer>
@@ -250,7 +267,7 @@ function InfoBooking() {
                     </FieldWrapper>
                     <FieldWrapper style={{ width: "32%" }}>
                       <LabelStyled htmlFor="monthExpire">
-                        Expriry Month <span>*</span>
+                        Expiry Month <span>*</span>
                       </LabelStyled>
                       <InputStyled
                         name="monthExpire"
@@ -263,7 +280,7 @@ function InfoBooking() {
                     </FieldWrapper>
                     <FieldWrapper style={{ width: "32%" }}>
                       <LabelStyled htmlFor="yearExpire">
-                        Expire Year <span>*</span>
+                        Expiry Year <span>*</span>
                       </LabelStyled>
                       <InputStyled min="1900" name="yearExpire" type="number" />
                       <ErrorStyled component="div" name="yearExpire" />
@@ -274,7 +291,6 @@ function InfoBooking() {
               )}
             </Formik>
           </div>
-          
         </FormWrapper>
 
         <DetailWrapper>
@@ -282,33 +298,74 @@ function InfoBooking() {
             <img src={image} alt="" />
           </ImageStyled>
           <InforStyled>
-            <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-              <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
-              <p style={{ marginTop:"20px"}}>{flight.airline}</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <img
+                src={
+                  flight.airline === "VietJet Air" ? vietjet : vietnamairline
+                }
+                alt="airline"
+              />
+              <p style={{ marginTop: "20px" }}>{flight.airline}</p>
             </div>
-            <img src={arrow4} alt="" style={{height:"100%"}} />
+            <img src={arrow4} alt="" style={{ height: "100%" }} />
             <InforItem>
-                <div style={{display:"inline-flex", alignItems:"center"}}>
-                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.departureCode}</p>
-                    <p>
-                    {flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]}
-                    </p>
-                  </div>
-                  <img src={ArrowIcon} alt="" style={{height:"15px", margin:"0 20px"}}/>
-                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.arrivalCode}</p>
-                    <p>
-                    {flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]}
-                    </p>
-                  </div>
+              <div style={{ display: "inline-flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p style={{ fontWeight: "700", fontSize: "2rem" }}>
+                    {flight.departureCode}
+                  </p>
+                  <p>
+                    {flight.departure_time.split("T")[1].split(":")[0] +
+                      ":" +
+                      flight.departure_time.split("T")[1].split(":")[1]}
+                  </p>
                 </div>
-                <p style={{color:"gray", marginTop:"20px"}}>
-                  {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
-                </p>
+                <img
+                  src={ArrowIcon}
+                  alt=""
+                  style={{ height: "15px", margin: "0 20px" }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p style={{ fontWeight: "700", fontSize: "2rem" }}>
+                    {flight.arrivalCode}
+                  </p>
+                  <p>
+                    {flight.arrival_time.split("T")[1].split(":")[0] +
+                      ":" +
+                      flight.arrival_time.split("T")[1].split(":")[1]}
+                  </p>
+                </div>
+              </div>
+              <p style={{ color: "gray", marginTop: "20px" }}>
+                {flight.departure_time.split("T")[0].split("-")[2] +
+                  "-" +
+                  flight.departure_time.split("T")[0].split("-")[1] +
+                  "-" +
+                  flight.departure_time.split("T")[0].split("-")[0]}
+              </p>
             </InforItem>
           </InforStyled>
-          <p style={{color:"#0E185F", marginBottom:"10px"}}>Flight Detail</p>
+          <p style={{ color: "#0E185F", marginBottom: "10px" }}>
+            Flight Detail
+          </p>
         </DetailWrapper>
       </Wrapper>
     </>

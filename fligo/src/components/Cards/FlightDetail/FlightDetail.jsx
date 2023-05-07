@@ -59,7 +59,7 @@ function FlightDetail({ flight, onClose }) {
                 <div style={{display:"inline-flex"}}>
                     <img src={baggage} alt="baggage" style={{height:"30px"}}/>
                     <div style={{display:"flex",flexDirection:"column"}}>
-                        <BlackText>Baggage {flight.baggage} kg (buy at booking)</BlackText>
+                        <BlackText>Baggage {flight.baggage} (buy at booking)</BlackText>
                         <BlackText>Cabin baggage 7 kg</BlackText>
                     </div>
                 </div>

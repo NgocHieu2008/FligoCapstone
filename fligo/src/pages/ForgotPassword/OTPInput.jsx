@@ -99,6 +99,12 @@ function OTPInput() {
   const handleBackButton = () => {
     setPage("forgot-password")
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleConfirmClick(event);
+    }
+  };
   return (
     <>
       <Wrapper>
@@ -113,8 +119,8 @@ function OTPInput() {
             complete the reset password process, please enter the 6 digit code
             below.
           </Paragraph>
-
-          <form action="">
+          
+          <form onKeyDown={handleKeyDown}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <CodeInput
                 maxLength={1}
