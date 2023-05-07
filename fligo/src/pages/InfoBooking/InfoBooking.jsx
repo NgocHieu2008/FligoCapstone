@@ -13,7 +13,8 @@ import {
   DetailWrapper,
   ImageStyled,
   InforStyled,
-  InforItem
+  InforItem,
+  ModalStyled
 } from "./InforBooking.styled";
 import { Formik } from "formik";
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
@@ -25,6 +26,8 @@ import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
 import arrow4 from "~/assets/Arrow 4.png";
 import ArrowIcon from "~/assets/Arrow 5.png";
+import moment from "moment";
+import FlightDetail from "~/components/Cards/FlightDetail/FlightDetail";
 
 const PassengerSchema = Yup.object().shape({
   title: Yup.string().oneOf(["Mr.", "Ms."]).required("Required"),
@@ -53,10 +56,34 @@ function InfoBooking() {
   };
 
   const SubmitInfo = (values) => {
+    // add key time order to values
+    // time order = current time
+    const timeOrder = new Date().toISOString();
+    values = { ...values, timeOrder };
     console.log(values);
+    // check expire date
+    const expireDate = moment(`${values.monthExpire}/${values.dayExpire}/${values.yearExpire}`, 'MM/DD/YYYY');
+    const currentDate = moment();
+    if (expireDate.isBefore(currentDate)) {
+      alert("Passport is expired");
+      return;
+    } else {
+      // save passenger info to local storage
     localStorage.setItem("passengerInfo", JSON.stringify(values));
+    }
+
     window.location.href = "/confirm-info";
   };
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  }
 
   return (
     <>
@@ -292,24 +319,30 @@ function InfoBooking() {
                   <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                     <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.departureCode}</p>
                     <p>
-                    {flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]}
+                    {moment(flight.departure_time).format("HH:mm")}
                     </p>
                   </div>
                   <img src={ArrowIcon} alt="" style={{height:"15px", margin:"0 20px"}}/>
                   <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
                     <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.arrivalCode}</p>
                     <p>
-                    {flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]}
+                    {moment(flight.arrival_time).format("HH:mm")}
                     </p>
                   </div>
                 </div>
                 <p style={{color:"gray", marginTop:"20px"}}>
-                  {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
+                  {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
                 </p>
             </InforItem>
           </InforStyled>
-          <p style={{color:"#0E185F", marginBottom:"10px"}}>Flight Detail</p>
+          <p style={{color:"#0E185F", marginBottom:"10px", cursor:"pointer"}}
+          onClick={handleOpenPopup}
+          >Flight Detail</p>
+          <ModalStyled isOpen={showPopup} onRequestClose={handleClosePopup} ariaHideApp={false}>
+        <FlightDetail flight={flight} />
+      </ModalStyled>
         </DetailWrapper>
+        
       </Wrapper>
     </>
   );

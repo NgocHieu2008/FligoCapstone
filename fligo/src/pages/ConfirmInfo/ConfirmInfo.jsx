@@ -1,5 +1,7 @@
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
-import { ConfirmInfoWrapper, Heading, ConfirmContainer, ConfirmLeft, ConfirmRight, ConfirmItem, SubHead, EditButton, ItemTitle, DetailItem, GreenText, Insurance, Input, ButtonStyled } from "./ConfirmInfo.styled";
+import { ConfirmInfoWrapper, Heading, ConfirmContainer, ConfirmLeft, ConfirmRight, ConfirmItem, SubHead, EditButton, 
+    ItemTitle, DetailItem, GreenText, Insurance, Input, ButtonStyled,ButtonStyled2 } from "./ConfirmInfo.styled";
+
 import { SubWrapper, DetailWrapper, Time, Location, Direct} from "~/components/Cards/FlightCard/FlightCard.styled";
 import { BlackText, GrayText} from "~/pages/BookSeat/BookSeat.styled";
 
@@ -13,6 +15,9 @@ import checkIcon from "~/assets/icon _check.png";
 import baggage from "~/assets/baggage.png";
 import tick from "~/assets/tick-square.png";
 import ArrowIcon from "~/assets/Arrow 5.png";
+import moment from "moment";
+import FlightDetail from "~/components/Cards/FlightDetail/FlightDetail";
+import  { ModalStyled } from "~/pages/InfoBooking/InforBooking.styled";
 function ConfirmInfo() {
 
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
@@ -84,6 +89,21 @@ function ConfirmInfo() {
         window.location.href = "/info-booking";
     }
 
+
+    const [showPopup, setShowPopup] = useState(false);
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  }
+
+    const handleChangeSeat = () => {
+        window.location.href = "/book-seat";
+    }
+
     return ( 
         <>
         <BookingTitle title="Confirmation" active="confirm" />
@@ -135,7 +155,7 @@ function ConfirmInfo() {
                         </ItemTitle>
                         <div style={{padding:"10px 30px"}}>
                             <SubHead><span>Departure: </span>
-                             {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
+                             {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
                             </SubHead>
                             <DetailItem>
                                 <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
@@ -143,17 +163,19 @@ function ConfirmInfo() {
                                 <DetailWrapper>
                                     <SubWrapper>
                                         <Time>{
-                                            flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]
+                                            moment(flight.departure_time).format("HH:mm")
                                         }</Time>
                                         <Location>{flight.departureCode}</Location>
                                     </SubWrapper>
                                     <SubWrapper>
-                                        <Direct>2h 10m (Direct)</Direct>
+                                        <Direct>{
+                                            moment(flight.arrival_time).diff(moment(flight.departure_time), 'hours') + "h " + moment(flight.arrival_time).diff(moment(flight.departure_time), 'minutes')%60 + "m"
+                                        } (Direct)</Direct>
                                         <img src={direct} alt="direct"/>
                                     </SubWrapper>
                                     <SubWrapper>
                                         <Time>{
-                                            flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]
+                                            moment(flight.arrival_time).format("HH:mm")
                                         }</Time>
                                         <Location>{flight.arrivalCode}</Location>
                                     </SubWrapper>
@@ -168,7 +190,10 @@ function ConfirmInfo() {
                                 <GreenText>Reschedule Available</GreenText>
                             </p>
                         </div>
-                        <EditButton>Details</EditButton>
+                        <EditButton onClick={handleOpenPopup}>Details</EditButton>
+                        <ModalStyled isOpen={showPopup} onRequestClose={handleClosePopup} ariaHideApp={false}>
+        <FlightDetail flight={flight} />
+      </ModalStyled>
                     </ConfirmItem>
                     <Heading>Price Details</Heading>
                     <ConfirmItem style={{padding:"20px 0"}}>
@@ -198,7 +223,7 @@ function ConfirmInfo() {
                         <div style={{padding:"0 20px"}}>
                             <SubHead> <img src={baggage} alt=""/>  Baggage</SubHead>
                             <p>Get your packing list ready! See how many bags you can bring.</p>
-                            <p style={{textAlign:"end", fontWeight:"700", color:"#2A8CFF"}}>Select baggage</p>
+                            <ButtonStyled2>Select baggage</ButtonStyled2>
                         </div>
                         <div style={{borderBottom:"1px solid #0E185F", margin:"10px 0"}}></div>
                         <div style={{padding:"0 20px"}}>
@@ -211,13 +236,13 @@ function ConfirmInfo() {
                                 </div>
                                 <div>
                                     <GrayText>
-                                    {flight.departure_time.split("T")[1].split(":")[0] + ":" + flight.departure_time.split("T")[1].split(":")[1]}
+                                    {moment(flight.departure_time).format("HH:mm")}
                                     - 
-                                    {flight.arrival_time.split("T")[1].split(":")[0] + ":" + flight.arrival_time.split("T")[1].split(":")[1]}
+                                    {moment(flight.arrival_time).format("HH:mm")}
                                     </GrayText>
                                     <GrayText style={{margin:"0 5px"}}>|</GrayText>
                                     <GrayText>
-                                        {flight.departure_time.split("T")[0].split("-")[2] + "-" + flight.departure_time.split("T")[0].split("-")[1] + "-" + flight.departure_time.split("T")[0].split("-")[0]}
+                                        {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
                                     </GrayText>
                                     <GrayText style={{margin:"0 5px"}}>|</GrayText>
                                     <GrayText>{flight.airline}</GrayText>
@@ -229,7 +254,7 @@ function ConfirmInfo() {
                                  {seat.row}{seat.column}
                                 </SubHead>
                             </div>
-                            <p style={{textAlign:"end", fontWeight:"700", color:"#2A8CFF"}}>Change seat</p>
+                            <ButtonStyled2 onClick={handleChangeSeat}>Change seat</ButtonStyled2>
                         </div>
                     </ConfirmItem>
                     <Heading>Insurance</Heading>
@@ -247,7 +272,7 @@ function ConfirmInfo() {
                                 <SubHead style={{color:"#BC4141", marginRight:"0"}}>$20</SubHead>
                             </Insurance>
                             <p>Enjoy The Safest Trip with Travel Insurance</p>
-                            <p style={{textAlign:"end", fontWeight:"700", color:"#2A8CFF"}}>View Details</p>
+                            <ButtonStyled2>View Details</ButtonStyled2>
                         </div>
                         <div style={{borderBottom:"1px solid #0E185F", margin:"10px 0"}}></div>
                         <div style={{padding:"0 20px"}}>
@@ -263,7 +288,7 @@ function ConfirmInfo() {
                                 <SubHead style={{color:"#BC4141", marginRight:"0"}}>$10</SubHead>
                             </Insurance>
                             <p>Baggage insurance cover theft, loss, delay, or damage to personal items during a trip.</p>
-                            <p style={{textAlign:"end", fontWeight:"700", color:"#2A8CFF"}}>View Details</p>
+                            <ButtonStyled2>View Details</ButtonStyled2>
                         </div>
                         <div style={{borderBottom:"1px solid #0E185F", margin:"10px 0"}}></div>
                         <div style={{padding:"0 20px"}}>
@@ -279,7 +304,7 @@ function ConfirmInfo() {
                                 <SubHead style={{color:"#BC4141", marginRight:"0"}}>$25</SubHead>
                             </Insurance>
                             <p>If you’re unable to take a trip due to an unforeseeable event, a trip cancellation policy will reimburse you for your prepaid, forfeited and non-refundable costs</p>
-                            <p style={{textAlign:"end", fontWeight:"700", color:"#2A8CFF"}}>View Details</p>
+                            <ButtonStyled2>View Details</ButtonStyled2>
                         </div>
                     </ConfirmItem>
                 </ConfirmRight>

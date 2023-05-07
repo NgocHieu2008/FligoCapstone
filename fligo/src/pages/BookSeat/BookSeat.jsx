@@ -4,7 +4,7 @@ import { SeatMapContainer,TitleWrapper, SubTitle, BlackText, GrayText, ContentWr
 import SeatIcon from "~/assets/Seat.png";
 import ArrowIcon from "~/assets/Arrow 5.png";
 import { UserContext } from "~/contexts/UserContext";
-
+import moment from 'moment';
 
 const seats = [
     { row: 1, column: 'A', status: 'Available' },
@@ -178,13 +178,13 @@ function BookSeat() {
             </div>
             <div>
                 <GrayText>
-                {flightInfo.departure_time.split("T")[1].split(":")[0] + ":" + flightInfo.departure_time.split("T")[1].split(":")[1]}
+                {moment(flightInfo.departure_time).format("HH:mm")}
                  - 
-                {flightInfo.arrival_time.split("T")[1].split(":")[0] + ":" + flightInfo.arrival_time.split("T")[1].split(":")[1]}
+                {moment(flightInfo.arrival_time).format("HH:mm")}
                 </GrayText>
                 <GrayText>|</GrayText>
                 <GrayText>
-                    {flightInfo.departure_time.split("T")[0].split("-")[2] + "-" + flightInfo.departure_time.split("T")[0].split("-")[1] + "-" + flightInfo.departure_time.split("T")[0].split("-")[0]}
+                {moment(flightInfo.departure_time).format("ddd, DD MMM YYYY")}
                 </GrayText>
                 <GrayText>|</GrayText>
                 <GrayText>{flightInfo.airline}</GrayText>

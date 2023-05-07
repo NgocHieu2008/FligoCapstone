@@ -39,7 +39,7 @@ function SearchProvider({ children }) {
 
   // fetch data from server
   const response = await fetch(
-    `http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}`
+    `http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}&date=${departureDate}`
   );
   const data = await response.json();
   setSearchResult(data.data);

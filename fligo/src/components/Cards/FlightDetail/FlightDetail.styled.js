@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     flex-direction: row;
     padding: 20px;
     margin-top:5px;
-    width: 95%;
+    width: 100%;
 `;
 
 export const SubWrapper = styled.div`
