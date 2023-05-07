@@ -15,6 +15,7 @@ import {
 import SeatIcon from "~/assets/Seat.png";
 import ArrowIcon from "~/assets/Arrow 5.png";
 import { UserContext } from "~/contexts/UserContext";
+import moment from 'moment';
 
 const seats = [
   { row: 1, column: "A", status: "Available" },
@@ -255,16 +256,17 @@ function BookSeat() {
               <BlackText>Available</BlackText>
             </div>
             <div>
-              <div
-                style={{
-                  backgroundColor: "#C4C4C4",
-                  width: "50px",
-                  height: "50px",
-                  margin: "5px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                }}
-              ></div>
-              <BlackText>Not Available</BlackText>
+                <GrayText>
+                {moment(flightInfo.departure_time).format("HH:mm")}
+                 - 
+                {moment(flightInfo.arrival_time).format("HH:mm")}
+                </GrayText>
+                <GrayText>|</GrayText>
+                <GrayText>
+                {moment(flightInfo.departure_time).format("ddd, DD MMM YYYY")}
+                </GrayText>
+                <GrayText>|</GrayText>
+                <GrayText>{flightInfo.airline}</GrayText>
             </div>
             <div>
               <div

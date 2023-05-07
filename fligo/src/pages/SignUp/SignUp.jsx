@@ -53,7 +53,10 @@ function SignUp() {
     if (contactType === "phone") {
       setContactType("phone");
       url = "https://fligo.vercel.app/otp/send-otp-sms";
-      body = JSON.stringify({ phoneNo: phone });
+      const phoneNumber = phone.trim().startsWith("0")
+        ? phone.trim().substring(1)
+        : phone.trim();
+      body = JSON.stringify({ phoneNumber: phoneNumber });
     }
 
     console.log(body)

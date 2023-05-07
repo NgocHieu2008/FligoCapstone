@@ -1,5 +1,18 @@
 import styled from "styled-components";
 import { Form, Field, ErrorMessage } from "formik";
+import Modal from 'react-modal';
+
+export const ModalStyled = styled(Modal)`
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  outline: none;
+  padding: 20px;
+  z-index: 9999;
+`;
 export const Wrapper = styled.section`
   background-color: #f2f2f2;
   padding: 30px 35px;
@@ -93,6 +106,7 @@ export const ButtonStyled = styled.button`
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   margin-top: 20px;
+  margin-right: 20px;
   align-self: flex-end;
   &:hover {
     background-color: #fff;

@@ -9,13 +9,13 @@ import {
 import congratsImage from "../../assets/congrats.png";
 
 function SuccessPayment() {
-  const handleDetailsButton = () => {
-    window.location.href = "/success-booking"
-  };
 
-  const handleHistoryButton = () => {
-    window.location.href = "/history"
-  };
+  const handleDetails = () => {
+    window.location.href = "/success-booking";
+  }
+  const handleHistory = () => {
+    window.location.href = "/history";
+  }
   return (
     <>
       <BookingTitle active="success" />
@@ -23,8 +23,8 @@ function SuccessPayment() {
         <Title>Your booking was made successful!</Title>
         <Image src={congratsImage} alt="" />
         <ButtonWrapper>
-          <Button onClick={handleDetailsButton}>Details</Button>
-          <Button $secondary onClick={handleHistoryButton}>Booking History</Button>
+            <Button onClick={handleDetails}>Details</Button>
+            <Button onClick={handleHistory} $secondary >Booking History</Button>
         </ButtonWrapper>
       </Wrapper>
     </>

@@ -73,7 +73,7 @@ function HeaderHome() {
               <Linked href="/">Support</Linked>
             </NavbarItem>
             <NavbarItem>
-              <Linked href="/">MRT App</Linked>
+              <Linked href="/">App</Linked>
             </NavbarItem>
             <NavbarItem>
               <Linked href="/">Promotion</Linked>
