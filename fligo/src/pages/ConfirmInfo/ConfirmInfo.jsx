@@ -156,6 +156,7 @@ function ConfirmInfo() {
                         <div style={{padding:"10px 30px"}}>
                             <SubHead><span>Departure: </span>
                              {moment.utc(flight.departure_time).format("ddd, DD MMM YYYY")}
+
                             </SubHead>
                             <DetailItem>
                                 <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>

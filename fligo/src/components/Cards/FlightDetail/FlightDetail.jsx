@@ -42,6 +42,7 @@ function FlightDetail({ flight, onClose }) {
                     </BlackText>
                     <GrayText>
                         {
+
                             moment.utc(flight.arrival_time).format('DD MMMM')
                         }
                     </GrayText>
