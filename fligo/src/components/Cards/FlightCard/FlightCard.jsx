@@ -50,10 +50,10 @@ function FlightCard() {
     return ( 
         <>
         {flights.length >0 ? 
-        <>
+        <>  
+        
             {flights.map((flight) => (
             <Wrapper key = {flight._id}>
-
                 <div style={{display:"inline-flex", alignItems:"center"}}>
                     <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
                     <span style={{fontWeight:"700", marginLeft:"20px"}}>{flight.airline}</span>

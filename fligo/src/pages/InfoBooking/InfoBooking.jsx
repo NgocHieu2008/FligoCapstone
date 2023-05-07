@@ -14,7 +14,7 @@ import {
   ImageStyled,
   InforStyled,
   InforItem,
-  ModalStyled
+  ModalStyled,
 } from "./InforBooking.styled";
 import { Formik } from "formik";
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
@@ -69,9 +69,6 @@ function InfoBooking() {
   // console.log(userData);
   // console.log(userData?.firstname);
 
-  const SubmitInfo = async (values) => {
-    console.log(values);
-    console.log("Hi");
   const SubmitInfo = (values) => {
     // add key time order to values
     // time order = current time
@@ -79,14 +76,17 @@ function InfoBooking() {
     values = { ...values, timeOrder };
     console.log(values);
     // check expire date
-    const expireDate = moment(`${values.monthExpire}/${values.dayExpire}/${values.yearExpire}`, 'MM/DD/YYYY');
+    const expireDate = moment(
+      `${values.monthExpire}/${values.dayExpire}/${values.yearExpire}`,
+      "MM/DD/YYYY"
+    );
     const currentDate = moment();
     if (expireDate.isBefore(currentDate)) {
       alert("Passport is expired");
       return;
     } else {
       // save passenger info to local storage
-    localStorage.setItem("passengerInfo", JSON.stringify(values));
+      localStorage.setItem("passengerInfo", JSON.stringify(values));
     }
 
     window.location.href = "/confirm-info";
@@ -96,11 +96,11 @@ function InfoBooking() {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
-  }
+  };
 
   const handleClosePopup = () => {
     setShowPopup(false);
-  }
+  };
 
   return (
     <>
@@ -344,37 +344,63 @@ function InfoBooking() {
             </div>
             <img src={arrow4} alt="" style={{ height: "100%" }} />
             <InforItem>
-                <div style={{display:"inline-flex", alignItems:"center"}}>
-                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.departureCode}</p>
-                    <p>
-                    {moment(flight.departure_time).format("HH:mm")}
-                    </p>
-                  </div>
-                  <img src={ArrowIcon} alt="" style={{height:"15px", margin:"0 20px"}}/>
-                  <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-                    <p style={{fontWeight:"700", fontSize:"2rem"}}>{flight.arrivalCode}</p>
-                    <p>
-                    {moment(flight.arrival_time).format("HH:mm")}
-                    </p>
-                  </div>
+              <div style={{ display: "inline-flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p style={{ fontWeight: "700", fontSize: "2rem" }}>
+                    {flight.departureCode}
+                  </p>
+                  <p>{moment(flight.departure_time).format("HH:mm")}</p>
                 </div>
-                <p style={{color:"gray", marginTop:"20px"}}>
-                  {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
-                </p>
+                <img
+                  src={ArrowIcon}
+                  alt=""
+                  style={{ height: "15px", margin: "0 20px" }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p style={{ fontWeight: "700", fontSize: "2rem" }}>
+                    {flight.arrivalCode}
+                  </p>
+                  <p>{moment(flight.arrival_time).format("HH:mm")}</p>
+                </div>
+              </div>
+              <p style={{ color: "gray", marginTop: "20px" }}>
+                {moment(flight.departure_time).format("ddd, DD MMM YYYY")}
+              </p>
             </InforItem>
           </InforStyled>
-          <p style={{color:"#0E185F", marginBottom:"10px", cursor:"pointer"}}
-          onClick={handleOpenPopup}
-          >Flight Detail</p>
-          <ModalStyled isOpen={showPopup} onRequestClose={handleClosePopup} ariaHideApp={false}>
-        <FlightDetail flight={flight} />
-      </ModalStyled>
+          <p
+            style={{
+              color: "#0E185F",
+              marginBottom: "10px",
+              cursor: "pointer",
+            }}
+            onClick={handleOpenPopup}
+          >
+            Flight Detail
+          </p>
+          <ModalStyled
+            isOpen={showPopup}
+            onRequestClose={handleClosePopup}
+            ariaHideApp={false}
+          >
+            <FlightDetail flight={flight} />
+          </ModalStyled>
         </DetailWrapper>
-        
       </Wrapper>
     </>
   );
-}}
+}
 
 export default InfoBooking;
