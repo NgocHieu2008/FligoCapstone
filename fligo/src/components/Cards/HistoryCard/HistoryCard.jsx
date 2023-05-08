@@ -16,7 +16,7 @@ function HistoryCard() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://localhost:8000/tickets/${userData.username}`,
+        `https://fligo.vercel.app/tickets/${userData.username}`,
         {
           method: "GET",
           headers: {

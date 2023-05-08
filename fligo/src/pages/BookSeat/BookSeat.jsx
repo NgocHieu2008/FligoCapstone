@@ -161,7 +161,7 @@ function BookSeat() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://localhost:8000/flights/${flightInfo.flight_number}/tickets`,
+        `https://fligo.vercel.app/${flightInfo.flight_number}/tickets`,
         {
           method: "GET",
           headers: {
@@ -200,7 +200,7 @@ function BookSeat() {
       localStorage.setItem("selectedSeat", JSON.stringify(selectedSeat));
       // direct to payment page
       console.log(flightInfo.flight_number);
-      const response = await fetch("http://localhost:8000/book-seat", {
+      const response = await fetch("https://fligo.vercel.app/book-seat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

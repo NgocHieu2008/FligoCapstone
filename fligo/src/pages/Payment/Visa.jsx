@@ -37,7 +37,7 @@ function Visa() {
   const handleSubmit = async (values) => {
     // Lưu thông tin thanh toán vào local storage
     localStorage.setItem("paymentInfo", JSON.stringify(values));
-    const response = await fetch("http://localhost:8000/book-seat", {
+    const response = await fetch("https://fligo.vercel.app/book-seat", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

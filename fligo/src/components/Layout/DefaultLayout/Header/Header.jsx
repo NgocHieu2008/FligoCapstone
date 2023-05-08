@@ -52,7 +52,7 @@ function Header() {
     event.preventDefault();
 
     // call api to login
-    fetch("http://localhost:8000/login", {
+    fetch("https://fligo.vercel.app/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
