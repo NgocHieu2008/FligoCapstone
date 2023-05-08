@@ -61,17 +61,21 @@ function FlightCard() {
                 <DetailWrapper>
                     <SubWrapper>
                         <Time>{
-                            moment(flight.departure_time).format('HH:mm')
+                            moment.utc(flight.departure_time).format('HH:mm')
                         }</Time>
                         <Location>{flight.departureCode}</Location>
                     </SubWrapper>
                     <SubWrapper>
-                        <Direct>2h 10m (Direct)</Direct>
+                        <Direct>
+                        {
+                            moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'hours') + "h" + moment.utc(flight.arrival_time).diff(moment.utc(flight.departure_time), 'minutes')%60 + "m"
+                        }
+                         (Direct)</Direct>
                         <img src={direct} alt="direct"/>
                     </SubWrapper>
                     <SubWrapper>
                         <Time>{
-                            moment(flight.arrival_time).format('HH:mm')
+                            moment.utc(flight.arrival_time).format('HH:mm')
                         }</Time>
                         <Location>{flight.arrivalCode}</Location>
                     </SubWrapper>

@@ -47,19 +47,23 @@ function Visa() {
         seat: seat.row + seat.column,
         firstname: passenger.firstname,
         lastname: passenger.lastname,
-        dateOfBirth: `${passenger.dayOfBirtpassenger.monthOfBirth}/${passenger.yearOfBirth}`,
+        dateOfBirth: `${passenger.yearOfBirth}-${passenger.monthOfBirth}-${passenger.dayOfBirth}`,
         passport: passenger.passport,
-        expiryDate: `${passenger.dayExpire}/${passenger.monthExpire}/${passenger.yearExpire}`,
+        expiryDate: `${passenger.yearExpire}-${passenger.monthExpire}-${passenger.dayExpire}`,
         title: passenger.title,
         nationality: passenger.nationality,
+        paymentBill:
+          paymentDetails.flightPrice +
+          paymentDetails.insurancePrice +
+          paymentDetails.serviceFee,
       }),
     });
     // Chuyển qua trang thanh toán thành công
     if (response.ok) {
-      localStorage.removeItem("passengerInfo");
+      // localStorage.removeItem("passengerInfo");
       localStorage.removeItem("selectedSeat");
-      localStorage.removeItem("selectedFlight");
-      localStorage.removeItem("bookingInfo");
+      // localStorage.removeItem("selectedFlight");
+      // localStorage.removeItem("bookingInfo");
       window.location.href = "/success-payment";
     }
   };
