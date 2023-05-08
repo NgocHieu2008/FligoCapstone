@@ -200,7 +200,7 @@ function InfoBooking() {
                 <FormStyled>
                   <FieldWrapper>
                     <LabelStyled htmlFor="title">
-                      Country Code <span>*</span>
+                      Title <span>*</span>
                     </LabelStyled>
                     <InputStyled
                       name="title"
