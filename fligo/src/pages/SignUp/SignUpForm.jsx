@@ -46,7 +46,7 @@ const SignUpForm = ({Submit}) => {
         validationSchema={SignupSchema}
         onSubmit={Submit}
       >
-        {({ values, handleSubmit, handleCountryCode, formikProps }) => (
+        {({ values, handleSubmit, formikProps }) => (
           
           <Form>
             <FieldWrapper>
@@ -98,7 +98,9 @@ const SignUpForm = ({Submit}) => {
                 <InputStyled
                   name="countryCode"
                   as = "select"
-                  onChange={handleCountryCode}
+                  type="select"
+                  placeholder="Country Code"
+                  value={values.countryCode}
                   >
                   <option value="+84">+84</option>
                   <option value="+39">+39</option>
