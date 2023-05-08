@@ -33,7 +33,7 @@ const Button = styled.button`
 `;
 
 function ContactForm({onSubmit}) {
-    const [contactType, setContactType] = useState('');
+    const [contactType, setContactType] = useState('phone');
 
     const handlePhoneSubmit = (e) => {
         setContactType('phone');

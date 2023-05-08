@@ -71,8 +71,6 @@ function SignUp() {
     if(response.ok){
       console.log(response);
       setStep(3);
-    } else {
-      alert("Something went wrong");
     }
   }
 
@@ -111,7 +109,9 @@ function SignUp() {
       });
       const data = await response.json();
       console.log(data);
-    
+      if(data.error === "Error"){
+        alert("Something went wrong");
+      } else
       setStep(4);
     } else {
       alert("The code you have entered is not correct, try again or re-send the link");
