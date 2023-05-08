@@ -21,7 +21,7 @@ import  { ModalStyled } from "~/pages/InfoBooking/InforBooking.styled";
 function ConfirmInfo() {
 
     const passengerInfo = JSON.parse(localStorage.getItem("passengerInfo"));
-    const { userData } = useContext(UserContext);
+    const { userData } = useContext(UserContext); 
     console.log(userData);
     const flight = JSON.parse(localStorage.getItem("selectedFlight"));
     const seat = JSON.parse(localStorage.getItem("selectedSeat"));

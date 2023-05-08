@@ -7,8 +7,13 @@ import date from "~/assets/Date_today_light.png";
 import flight from "~/assets/flight_icon.png";
 import vietjet from "~/assets/vietjet-air-logo.png";
 import vietnamairline from "~/assets/vietnam-airline-logo.png";
+import { useContext } from "react";
+import { UserContext } from "~/contexts/UserContext";
 
 function HistoryCard() {
+
+    const { userData } = useContext(UserContext);
+    console.log(userData);
     return ( 
         <Wrapper>
             <div>
