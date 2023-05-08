@@ -215,7 +215,7 @@ function BookSeat() {
       if (response.ok) {
         window.location.href = "/info-booking";
       }
-      else {
+      if(response.status === 400) {
         alert("Seat is not available now!")
       }
     } else {
