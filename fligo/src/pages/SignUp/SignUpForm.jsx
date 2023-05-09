@@ -12,7 +12,7 @@ const SignupSchema = Yup.object().shape({
     lastname: Yup.string().required('Required'),
     dateOfBirth: Yup.number().required('Required').positive().integer(),
     monthOfBirth: Yup.number().required('Required').max(12),
-    yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'Must be at least 18 years old'),
+    yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'At least 18 years old'),
     countryCode: Yup.string(),
     phoneNo: Yup.string().required('Required').matches(/^[0-9]+$/, 'Phone number must contain only numbers'),
     email: Yup.string().email('Invalid email').required('Required'),
