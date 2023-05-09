@@ -12,13 +12,13 @@ const SignupSchema = Yup.object().shape({
     lastname: Yup.string().required('Required'),
     dateOfBirth: Yup.number().required('Required').positive().integer(),
     monthOfBirth: Yup.number().required('Required').max(12),
-    yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'You must be at least 18 years old'),
+    yearOfBirth: Yup.number().required("Required").positive().integer().max(new Date().getFullYear() - 18, 'Must be at least 18 years old'),
     countryCode: Yup.string(),
     phoneNo: Yup.string().required('Required').matches(/^[0-9]+$/, 'Phone number must contain only numbers'),
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string()
         .required('Required')
-        .min(8, 'Password must contain at least 8 characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character'),
+        .min(8, 'Password must contain at least 8 characters').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 'At least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character'),
     confirmPassword: Yup.string()
         .required('Required')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
