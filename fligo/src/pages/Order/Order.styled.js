@@ -16,9 +16,10 @@ export const TimeLineWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: max-content;
+    padding: 10px 0;
     background: #fff;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    margin: 0 auto;
     `;
 
 export const ContentWrapper = styled.div`
@@ -87,3 +88,16 @@ export const Input = styled.input`
     padding: 0 10px;
     margin-right: 10px;
     `;
+
+export const Button = styled.button`
+    color: var(--blue-secondary-color);
+    background-color: ${(props) => props.active ? "background: rgba(47, 164, 255, 0.31)" : "white"};
+    border: none;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+`;
