@@ -8,13 +8,13 @@ import moment from 'moment';
 
 import React, { useState, useEffect } from 'react';
 
-function FlightCard() {
+function FlightCard3() {
 
     const [flights, setFlights] = useState([]);
 
     // get result from local storage
     const result = JSON.parse(localStorage.getItem('searchBarContent'));
-    const allFlights = result.flights1;
+    const allFlights = result.flights3;
 
     useEffect(() => {
         // Khởi tạo tất cả các chuyến bay ở trạng thái hide ban đầu
@@ -97,4 +97,4 @@ function FlightCard() {
      );
 }
 
-export default FlightCard;
+export default FlightCard3;
