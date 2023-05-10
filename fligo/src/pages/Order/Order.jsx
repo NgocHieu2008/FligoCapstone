@@ -12,7 +12,6 @@ import {
 } from "./Order.styled";
 import FlightCard from "~/components/Cards/FlightCard/FlightCard";
 import sort from "~/assets/sort.png";
-import Timeline from "~/components/Timeline/Timeline";
 
 import React from "react";
 
@@ -23,9 +22,6 @@ function Order() {
         <SearchBar />
       </SearchWrapper>
       <TimeLineWrapper>
-        <Timeline title="Fri, 11 May" />
-        <Timeline title="Sat, 12 May" />
-        <Timeline title="Sat, 12 May" />
       </TimeLineWrapper>
       <ContentWrapper>
         <FilterWrapper>

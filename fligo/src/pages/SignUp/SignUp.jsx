@@ -22,7 +22,7 @@ function SignUp() {
     // value.dayOfBirth = value.dateOfBirth + "/" + value.monthOfBirth + "/" + value.yearOfBirth;
     setValue(value);
     // call API check email
-    const response = await fetch("http://localhost:8000/check-email", {
+    const response = await fetch("https://fligo.vercel.app/check-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ function SignUp() {
     if(responseData.status === "approved") {
       console.log(value);
       // call API create user
-      const response = await fetch("http://localhost:8000/register", {
+      const response = await fetch("https://fligo.vercel.app/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

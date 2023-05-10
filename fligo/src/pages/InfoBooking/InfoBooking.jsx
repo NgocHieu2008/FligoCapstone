@@ -275,7 +275,7 @@ function InfoBooking() {
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="passport">
-                      Passport <span>*</span>
+                      Passport/ID Card Number<span>*</span>
                     </LabelStyled>
                     <InputStyled name="passport" />
                     <ErrorStyled component="div" name="passport" />
