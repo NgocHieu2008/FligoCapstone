@@ -28,10 +28,10 @@ function OTPInput() {
     // console.log(contactType);
     // console.log(contact);
     if (contactType === "email") {
-      url = "http://localhost:8000/otp/verify-otp-email";
+      url = "https://fligo.vercel.app/otp/verify-otp-email";
       body = JSON.stringify({ email: contact, otp: OTPinput.join("") });
     } else {
-      url = "http://localhost:8000/otp/verify-otp-sms";
+      url = "https://fligo.vercel.app/otp/verify-otp-sms";
       body = JSON.stringify({ phoneNumber: contact, otp: OTPinput.join("") });
     }
 

@@ -46,13 +46,13 @@ function SignUp() {
 
     if (contactType === "email") {
       setContactType("email");
-      url = "http://localhost:8000/otp/send-otp-email";
+      url = "https://fligo.vercel.app/otp/send-otp-email";
       body = JSON.stringify({ email: email });
     } else {
       setContactType("phone");
       console.log("phone");
       console.log(phone);
-      url = "http://localhost:8000/otp/send-otp-sms";
+      url = "https://fligo.vercel.app/otp/send-otp-sms";
       const phoneNumber = phone.trim().startsWith("0")
         ? phone.trim().substring(1)
         : phone.trim();
@@ -79,12 +79,12 @@ function SignUp() {
     let body;
 
     if (contactType === "email") {
-      url = "http://localhost:8000/otp/verify-otp-email";
+      url = "https://fligo.vercel.app/otp/verify-otp-email";
       body = JSON.stringify({ email: email, otp: otp });
     }
 
     if (contactType === "phone") {
-      url = "http://localhost:8000/otp/verify-otp-sms";
+      url = "https://fligo.vercel.app/otp/verify-otp-sms";
       body = JSON.stringify({ phoneNumber: phone, otp: otp });
     }
 

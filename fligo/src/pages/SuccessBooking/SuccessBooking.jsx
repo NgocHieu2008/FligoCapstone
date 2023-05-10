@@ -43,7 +43,7 @@ function SuccessBooking() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `http://localhost:8000/details?username=${userData.username}&bookTime=${bookTime}`,
+        `https://fligo.vercel.app/details?username=${userData.username}&bookTime=${bookTime}`,
         {
           method: "GET",
           headers: {
