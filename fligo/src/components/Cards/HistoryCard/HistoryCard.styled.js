@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     flex-direction: row;
     background-color: #fff;
     padding: 2rem 1rem 0 2rem;
+    margin-right: 30px;
     align-items: flex-start;
     justify-content: space-between;
     width: 30%;
@@ -25,3 +26,8 @@ export const Img = styled.img`
     width: 30px;
     margin-right: 10px;
     `;
+
+export const TicketWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`

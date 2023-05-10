@@ -14,7 +14,7 @@ import {
   ImageStyled,
   InforStyled,
   InforItem,
-  ModalStyled
+  ModalStyled,
 } from "./InforBooking.styled";
 import { Formik } from "formik";
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
@@ -41,19 +41,33 @@ const PassengerSchema = Yup.object().shape({
     .integer()
     .max(new Date().getFullYear(), `Invalid number of year`),
   nationality: Yup.string().required("Required"),
-  passport: Yup.string().required("Required"),
+  passport: Yup.string()
+    .required("Required")
+    .matches(/^\d{8}$/, "Passport number must be 8 digits"),
   dayExpire: Yup.number().required("Required").positive().integer(),
   monthExpire: Yup.number().required("Required").max(12),
   yearExpire: Yup.number().required("Required").positive().integer(),
+  // .test(
+  //   "expiration-date",
+  //   "Passport has expired",
+  //   ({ dayExpire, monthExpire, yearExpire }) => {
+  //     const expirationDate = new Date(yearExpire, monthExpire - 1, dayExpire);
+  //     const today = new Date();
+  //     return expirationDate >= today;
+  //   }
+  // ),
 });
-function InfoBooking() {
 
+function InfoBooking() {
   const { userData } = useContext(UserContext);
   const flight = JSON.parse(localStorage.getItem("selectedFlight"));
-
+  // console.log(seat);
   const Submit = (values) => {
     console.log(values);
   };
+
+  // console.log(userData);
+  // console.log(userData?.firstname);
 
   const SubmitInfo = (values) => {
     // add key time order to values
@@ -62,14 +76,17 @@ function InfoBooking() {
     values = { ...values, timeOrder };
     console.log(values);
     // check expire date
-    const expireDate = moment(`${values.monthExpire}/${values.dayExpire}/${values.yearExpire}`, 'MM/DD/YYYY');
+    const expireDate = moment(
+      `${values.monthExpire}/${values.dayExpire}/${values.yearExpire}`,
+      "MM/DD/YYYY"
+    );
     const currentDate = moment();
     if (expireDate.isBefore(currentDate)) {
       alert("Passport is expired");
       return;
     } else {
       // save passenger info to local storage
-    localStorage.setItem("passengerInfo", JSON.stringify(values));
+      localStorage.setItem("passengerInfo", JSON.stringify(values));
     }
 
     window.location.href = "/confirm-info";
@@ -79,11 +96,11 @@ function InfoBooking() {
 
   const handleOpenPopup = () => {
     setShowPopup(true);
-  }
+  };
 
   const handleClosePopup = () => {
     setShowPopup(false);
-  }
+  };
 
   return (
     <>
@@ -94,11 +111,11 @@ function InfoBooking() {
             <FormTitle>Contact Details</FormTitle>
             <Formik
               initialValues={{
-                firstname: '',
-                lastname: '',
+                firstname: "",
+                lastname: "",
                 countryCode: "",
-                phoneNumber: '',
-                email: '',
+                phoneNumber: "",
+                email: "",
               }}
               onSubmit={Submit}
             >
@@ -108,14 +125,14 @@ function InfoBooking() {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" value={userData?.firstname}/>
+                    <InputStyled name="firstname" value={userData?.firstname} />
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" value={userData?.lastname}/>
+                    <InputStyled name="lastname" value={userData?.lastname} />
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <PhoneContainer>
@@ -142,7 +159,10 @@ function InfoBooking() {
                       <LabelStyled htmlFor="phoneNumber">
                         Phone Number <span>*</span>
                       </LabelStyled>
-                      <InputStyled name="phoneNumber" value={userData?.phoneNo}/>
+                      <InputStyled
+                        name="phoneNumber"
+                        value={userData?.phoneNo}
+                      />
                       <ErrorStyled component="div" name="phoneNumber" />
                     </FieldWrapper>
                   </PhoneContainer>
@@ -150,21 +170,20 @@ function InfoBooking() {
                     <LabelStyled htmlFor="email">
                       Email <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="email" value={userData?.email}/>
+                    <InputStyled name="email" value={userData?.email} />
                     <ErrorStyled component="div" name="email" />
                   </FieldWrapper>
                 </FormStyled>
               )}
             </Formik>
           </div>
-
           <div className="passenger">
             <FormTitle>Passenger Details</FormTitle>
             <Formik
               initialValues={{
-                title: "",
-                firstname: "",
-                lastname: "",
+                title: "Mr.",
+                firstname: userData?.firstname ?? "",
+                lastname: userData?.lastname ?? "",
                 dayOfBirth: "",
                 monthOfBirth: "",
                 yearOfBirth: "",
@@ -181,7 +200,7 @@ function InfoBooking() {
                 <FormStyled>
                   <FieldWrapper>
                     <LabelStyled htmlFor="title">
-                      Country Code <span>*</span>
+                      Title <span>*</span>
                     </LabelStyled>
                     <InputStyled
                       name="title"
@@ -197,14 +216,14 @@ function InfoBooking() {
                     <LabelStyled htmlFor="firstname">
                       First Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="firstname" value={userData?.firstname}/>
+                    <InputStyled name="firstname" />
                     <ErrorStyled component="div" name="firstname" />
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="lastname">
                       Last Name <span>*</span>
                     </LabelStyled>
-                    <InputStyled name="lastname" value={userData?.lastname}/>
+                    <InputStyled name="lastname" />
                     <ErrorStyled component="div" name="lastname" />
                   </FieldWrapper>
                   <DateContainer>
@@ -256,7 +275,7 @@ function InfoBooking() {
                   </FieldWrapper>
                   <FieldWrapper>
                     <LabelStyled htmlFor="passport">
-                      Passport <span>*</span>
+                      Passport/ID Card Number<span>*</span>
                     </LabelStyled>
                     <InputStyled name="passport" />
                     <ErrorStyled component="div" name="passport" />
@@ -277,7 +296,7 @@ function InfoBooking() {
                     </FieldWrapper>
                     <FieldWrapper style={{ width: "32%" }}>
                       <LabelStyled htmlFor="monthExpire">
-                        Expriry Month <span>*</span>
+                        Expiry Month <span>*</span>
                       </LabelStyled>
                       <InputStyled
                         name="monthExpire"
@@ -290,7 +309,7 @@ function InfoBooking() {
                     </FieldWrapper>
                     <FieldWrapper style={{ width: "32%" }}>
                       <LabelStyled htmlFor="yearExpire">
-                        Expire Year <span>*</span>
+                        Expiry Year <span>*</span>
                       </LabelStyled>
                       <InputStyled min="1900" name="yearExpire" type="number" />
                       <ErrorStyled component="div" name="yearExpire" />
@@ -301,7 +320,6 @@ function InfoBooking() {
               )}
             </Formik>
           </div>
-          
         </FormWrapper>
 
         <DetailWrapper>
@@ -309,11 +327,22 @@ function InfoBooking() {
             <img src={image} alt="" />
           </ImageStyled>
           <InforStyled>
-            <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
-              <img src={flight.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline"/>
-              <p style={{ marginTop:"20px"}}>{flight.airline}</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <img
+                src={
+                  flight.airline === "VietJet Air" ? vietjet : vietnamairline
+                }
+                alt="airline"
+              />
+              <p style={{ marginTop: "20px" }}>{flight.airline}</p>
             </div>
-            <img src={arrow4} alt="" style={{height:"100%"}} />
+            <img src={arrow4} alt="" style={{ height: "100%" }} />
             <InforItem>
                 <div style={{display:"inline-flex", alignItems:"center"}}>
                   <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
@@ -335,14 +364,24 @@ function InfoBooking() {
                 </p>
             </InforItem>
           </InforStyled>
-          <p style={{color:"#0E185F", marginBottom:"10px", cursor:"pointer"}}
-          onClick={handleOpenPopup}
-          >Flight Detail</p>
-          <ModalStyled isOpen={showPopup} onRequestClose={handleClosePopup} ariaHideApp={false}>
-        <FlightDetail flight={flight} />
-      </ModalStyled>
+          <p
+            style={{
+              color: "#0E185F",
+              marginBottom: "10px",
+              cursor: "pointer",
+            }}
+            onClick={handleOpenPopup}
+          >
+            Flight Detail
+          </p>
+          <ModalStyled
+            isOpen={showPopup}
+            onRequestClose={handleClosePopup}
+            ariaHideApp={false}
+          >
+            <FlightDetail flight={flight} />
+          </ModalStyled>
         </DetailWrapper>
-        
       </Wrapper>
     </>
   );

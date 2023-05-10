@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import background from "../../assets/flight-booking.jpg";
-
+import { Field, ErrorMessage} from 'formik'
 export const Wrapper = styled.section`
   background: url(${background});
   background-size: cover;
@@ -100,4 +100,40 @@ export const Image = styled.img`
   margin: 20px auto;
   width: 35%;
   object-fit: scale-down;
+`;
+
+export const FieldWrapper = styled.div`
+  background-color: var(--white-color);
+  /* height: 100%; */
+  width: 100%;
+  padding: 10px 20px 5px;
+`;
+
+export const LabelStyled = styled.label`
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 10px;
+  color: var(--blue-secondary-color);
+  span {
+    color: red;
+  }
+`;
+
+export const InputStyled = styled(Field)`
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 4px 4px #c4c4c4;
+  border: 0.4px solid #c4c4c4;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+`;
+
+export const ErrorStyled = styled(ErrorMessage)`
+  color: red;
+  font-size: 1.2rem;
 `;

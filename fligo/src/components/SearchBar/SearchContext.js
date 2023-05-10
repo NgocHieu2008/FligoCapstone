@@ -51,13 +51,8 @@ function SearchProvider({ children }) {
   }
 
   // fetch data from server
-<<<<<<< Updated upstream
-  const response = await fetch(
-    `http://localhost:8000/flights?departure=${fromLocation}&arrival=${toLocation}&date=${departureDate}`
-=======
   const response1 = await fetch(
     `https://fligo.vercel.app/flights?departure=${fromLocation}&arrival=${toLocation}&date=${departureDate}`
->>>>>>> Stashed changes
   );
   const data1 = await response1.json();
   setSearchResult1(data1.data);

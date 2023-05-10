@@ -1,6 +1,12 @@
 import BookingTitle from "~/components/BookingTitle/BookingTitle";
-import { Wrapper, Title, Image, ButtonWrapper, Button } from "./SuccessPayment.styled";
-import congratsImage from "../../assets/congrats.png"
+import {
+  Wrapper,
+  Title,
+  Image,
+  ButtonWrapper,
+  Button,
+} from "./SuccessPayment.styled";
+import congratsImage from "../../assets/congrats.png";
 
 function SuccessPayment() {
 
