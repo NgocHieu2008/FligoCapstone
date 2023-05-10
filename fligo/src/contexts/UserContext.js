@@ -7,7 +7,7 @@ export const UserProvider = (props) => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch("https://fligo.vercel.app/userData", {
+      const response = await fetch("http://localhost:8000/userData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

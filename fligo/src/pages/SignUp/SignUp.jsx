@@ -22,7 +22,7 @@ function SignUp() {
     // value.dayOfBirth = value.dateOfBirth + "/" + value.monthOfBirth + "/" + value.yearOfBirth;
     setValue(value);
     // call API check email
-    const response = await fetch("https://fligo.vercel.app/check-email", {
+    const response = await fetch("http://localhost:8000/check-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,13 +46,13 @@ function SignUp() {
 
     if (contactType === "email") {
       setContactType("email");
-      url = "https://fligo.vercel.app/otp/send-otp-email";
+      url = "http://localhost:8000/otp/send-otp-email";
       body = JSON.stringify({ email: email });
     } else {
       setContactType("phone");
       console.log("phone");
       console.log(phone);
-      url = "https://fligo.vercel.app/otp/send-otp-sms";
+      url = "http://localhost:8000/otp/send-otp-sms";
       const phoneNumber = phone.trim().startsWith("0")
         ? phone.trim().substring(1)
         : phone.trim();
@@ -79,12 +79,12 @@ function SignUp() {
     let body;
 
     if (contactType === "email") {
-      url = "https://fligo.vercel.app/otp/verify-otp-email";
+      url = "http://localhost:8000/otp/verify-otp-email";
       body = JSON.stringify({ email: email, otp: otp });
     }
 
     if (contactType === "phone") {
-      url = "https://fligo.vercel.app/otp/verify-otp-sms";
+      url = "http://localhost:8000/otp/verify-otp-sms";
       body = JSON.stringify({ phoneNumber: phone, otp: otp });
     }
 
@@ -100,7 +100,7 @@ function SignUp() {
     if(responseData.status === "approved") {
       console.log(value);
       // call API create user
-      const response = await fetch("https://fligo.vercel.app/register", {
+      const response = await fetch("http://localhost:8000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

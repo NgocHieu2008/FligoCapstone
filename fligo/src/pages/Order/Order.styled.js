@@ -16,7 +16,7 @@ export const TimeLineWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 0;
+    height: max-content;
     background: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     `;

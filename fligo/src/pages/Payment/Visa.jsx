@@ -34,10 +34,18 @@ function Visa() {
   const flight = JSON.parse(localStorage.getItem("selectedFlight"));
   const seat = JSON.parse(localStorage.getItem("selectedSeat"));
   const passenger = JSON.parse(localStorage.getItem("passengerInfo"));
+  console.log(paymentDetails);
+  console.log("Hi");
+  const paidBill =
+  paymentDetails.flightPrice +
+  paymentDetails.insurancePrice +
+  paymentDetails.serviceFee;
+  console.log(paidBill);
   const handleSubmit = async (values) => {
     // Lưu thông tin thanh toán vào local storage
     localStorage.setItem("paymentInfo", JSON.stringify(values));
-    const response = await fetch("https://fligo.vercel.app/book-seat", {
+   
+    const response = await fetch("http://localhost:8000/book-seat", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -52,19 +60,17 @@ function Visa() {
         expiryDate: `${passenger.yearExpire}-${passenger.monthExpire}-${passenger.dayExpire}`,
         title: passenger.title,
         nationality: passenger.nationality,
-        paymentBill:
-          paymentDetails.flightPrice +
-          paymentDetails.insurancePrice +
-          paymentDetails.serviceFee,
+        paymentBill: paidBill,
       }),
     });
     // Chuyển qua trang thanh toán thành công
     if (response.ok) {
       // localStorage.removeItem("passengerInfo");
-      localStorage.removeItem("selectedSeat");
+      // localStorage.removeItem("selectedSeat");
       // localStorage.removeItem("selectedFlight");
       // localStorage.removeItem("bookingInfo");
       window.location.href = "/success-payment";
+      // alert("success")
     }
   };
 

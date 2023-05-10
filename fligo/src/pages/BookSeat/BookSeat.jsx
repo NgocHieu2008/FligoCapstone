@@ -158,10 +158,11 @@ function BookSeat() {
 
   // get thông tin chuyến bay được chọn từ localStorage
   const flightInfo = JSON.parse(localStorage.getItem("selectedFlight"));
+  console.log(flightInfo.airline);
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `https://fligo.vercel.app/${flightInfo.flight_number}/tickets`,
+        `http://localhost:8000/flights/${flightInfo.flight_number}/tickets`,
         {
           method: "GET",
           headers: {
@@ -171,7 +172,7 @@ function BookSeat() {
       );
       const data = await response.json();
       console.log(Object.values(data));
-      console.log("hi");
+      // console.log("hi");
       const updatedSeats = seats.map((seat) => {
         // console.log(`${seat.row}${seat.column}`);
         const bookedSeat = Object.values(data).find(
@@ -199,8 +200,8 @@ function BookSeat() {
       // Lưu thông tin về ghế được chọn vào localStorage
       localStorage.setItem("selectedSeat", JSON.stringify(selectedSeat));
       // direct to payment page
-      console.log(flightInfo.flight_number);
-      const response = await fetch("https://fligo.vercel.app/book-seat", {
+      console.log(flightInfo.airline);
+      const response = await fetch("http://localhost:8000/book-seat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,13 +210,17 @@ function BookSeat() {
           flight_number: flightInfo.flight_number,
           username: userData.username,
           seat: selectedSeat.row + selectedSeat.column,
+          airline: flightInfo.airline
         }),
       });
 
       if (response.ok) {
+        const bookedTime = new Date();
+        localStorage.setItem("bookedTime", JSON.stringify(bookedTime))
         window.location.href = "/info-booking";
       }
-      if(response.status === "400") {
+      console.log(response.status);
+      if(response.status === 400) {
         alert("Seat is not available now!")
       }
     } else {

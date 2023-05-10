@@ -33,7 +33,7 @@ function Reset() {
   // console.log(users);
   const handleConfirmClick = async (values) => {
     try {
-      const response = await fetch("https://fligo.vercel.app/reset-password", {
+      const response = await fetch("http://localhost:8000/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
