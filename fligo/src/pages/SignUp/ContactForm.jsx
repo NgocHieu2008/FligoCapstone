@@ -32,6 +32,7 @@ const Button = styled.button`
   }
 `;
 
+
 function ContactForm({ onSubmit }) {
   const [contactType, setContactType] = useState("email");
 
@@ -68,6 +69,7 @@ function ContactForm({ onSubmit }) {
       </div>
     </Wrapper>
   );
+
 }
 
 export default ContactForm;
