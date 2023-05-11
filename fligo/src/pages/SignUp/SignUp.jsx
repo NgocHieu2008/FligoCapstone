@@ -43,9 +43,8 @@ function SignUp() {
   const handleContact = async (contactType) => {
     let url;
     let body;
-
+    console.log(contactType);
     if (contactType === "email") {
-      setContactType("email");
       url = "https://fligo.vercel.app/otp/send-otp-email";
       body = JSON.stringify({ email: email });
     } else {
