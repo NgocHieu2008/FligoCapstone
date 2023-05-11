@@ -35,27 +35,27 @@ function SuccessBooking() {
   const directTime = moment
     .utc(flightData.arrival_time)
     .diff(moment(flightData.departure_time), "hours", true);
-
+  const bookTime = JSON.parse(localStorage.getItem("bookedTime"));
   const orderTime = moment
     .utc(data.timeOrder)
     .format("MMMM Do YYYY, h:mm:ss a");
 
-    useEffect(() => {
-        async function fetchData() {
-          const response = await fetch(
-            `https://fligo.vercel.app/tickets/${userData.username}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const data = await response.json();
-          console.log(data);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        `https://fligo.vercel.app/details?username=${userData.username}&bookTime=${bookTime}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-        fetchData();
-      }, []);
+      );
+      const data = await response.json();
+      console.log(data);
+    }
+    fetchData();
+  }, []);
   return (
     <Wrapper>
       <Title>BOOKING SUCCESSFUL</Title>

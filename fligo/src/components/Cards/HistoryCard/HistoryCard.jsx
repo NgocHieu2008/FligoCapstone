@@ -13,8 +13,11 @@ import { UserContext } from "~/contexts/UserContext";
 function HistoryCard() {
   const { userData } = useContext(UserContext);
   const [bookingInfo, setBookingInfo] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const response = await fetch(
         `https://fligo.vercel.app/tickets/${userData.username}`,
         {
@@ -25,22 +28,11 @@ function HistoryCard() {
         }
       );
       const data = await response.json();
-      console.log("hello");
-      //   console.log(data.tickets);
+    //   console.log("hello");
+        // console.log(data);
       const bookedInfo = Object.values(data);
-      //   const transformedData = bookingInfo.map((ticket) => ({
-      //     reservationCode: ticket.reservationCode,
-      //     fullname: `${ticket.firstname} ${ticket.lastname}`,
-      //     bookedDate: new Date().toLocaleDateString("en-US", {
-      //       day: "numeric",
-      //       month: "short",
-      //       year: "numeric",
-      //     }),
-      //     // add any other fields you need here
-      //   }));
+      // console.log(bookedInfo);
       const transformedData = bookedInfo.map((ticket) => ({
-        departure_time: ticket.departure_time,
-        arrival_time: ticket.arrival_time,
         reservationCode: ticket.reservationCode,
         firstname: ticket.firstname,
         lastname: ticket.lastname,
@@ -50,10 +42,12 @@ function HistoryCard() {
           year: "numeric",
         }),
         status: "Paid",
-        total: ticket.price,
+        total: ticket.paymentBill,
+        airline: ticket.airline
       }));
-      setBookingInfo(transformedData.flat());
-      console.log(transformedData);
+      setBookingInfo(transformedData.flat());;
+      setIsLoading(false);
+      // console.log(bookingInfo);
     }
     fetchData();
   }, []);
@@ -88,7 +82,7 @@ function HistoryCard() {
                 Total
               </p>
             </div>
-            <img src={vietjet} alt="airline" style={{ width: "50px" }} />
+            <img src={booking.airline === "VietJet Air" ? vietjet : vietnamairline} alt="airline" style={{ width: "50px" }} />
             <div
               style={{
                 display: "flex",
@@ -96,17 +90,24 @@ function HistoryCard() {
                 width: "fit-content",
               }}
             >
-              <span>{booking.departure_time} - {booking.arrival_time}</span>
+              <span>
+                20:00 - 22:00
+              </span>
               <span>{booking.reservationCode}</span>
               <span>
                 {booking.firstname} {booking.lastname}
               </span>
               <span>{booking.bookedDate}</span>
               <span>{booking.status}</span>
-              <span>{booking.total}</span>
+              <span>${booking.total}</span>
             </div>
           </Wrapper>
         ))}
+        {isLoading && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            Loading...
+          </div>
+        )}
       </TicketWrapper>
     </>
   );
